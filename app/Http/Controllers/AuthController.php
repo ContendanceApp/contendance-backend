@@ -28,8 +28,20 @@ class AuthController extends Controller
     {
         $credentials = request(['email', 'password']);
 
+        $user = User::where('email', $credentials['email'])->first();
+
+        if (!$user) {
+            return response()->json(
+                ['message' => 'Email tidak terdaftar!'],
+                401
+            );
+        }
+
         if (!($token = auth()->attempt($credentials))) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(
+                ['message' => 'Email atau password tidak cocok!'],
+                401
+            );
         }
 
         return $this->respondWithToken($token);
