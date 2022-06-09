@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Traits\PresenceTrait;
 use App\Models\Beacon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class BeaconController extends Controller
 {
+    use PresenceTrait;
+
     /**
      * Display a listing of the resource.
      *
@@ -37,12 +40,14 @@ class BeaconController extends Controller
      */
     public function store(Request $request)
     {
-        $beacon = new Beacon;
+        $beacon = new Beacon();
 
         if ($beacon::create($request->all())) {
-            return response()->json(['message' => 'Data berhasil ditambahkan!'], 201);
+            return response()->json(
+                ['message' => 'Data berhasil ditambahkan!'],
+                201
+            );
         }
-
     }
 
     /**
@@ -88,5 +93,16 @@ class BeaconController extends Controller
     public function destroy(Beacon $beacon)
     {
         //
+    }
+
+    public function searchClassAndSchedule(Request $request)
+    {
+        $validated_schedule = $this->validateSchedule($request);
+        return response()->json(
+            [
+                "data" => $validated_schedule->original,
+            ],
+            200
+        );
     }
 }

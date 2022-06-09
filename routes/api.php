@@ -45,7 +45,7 @@ Route::group(
         Route::post("/create", [BeaconController::class, 'store']);
         Route::post("/validate-schedule", [
             BeaconController::class,
-            'validateSchedule',
+            'searchClassAndSchedule',
         ]);
     }
 );
