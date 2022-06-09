@@ -116,4 +116,17 @@ class PresenceController extends Controller
     {
         //
     }
+
+    public function getActiveClass(Request $request)
+    {
+        $userId = $request->user_id;
+        $presence = new Presence();
+        $latestPresence = $presence
+            ::latest('presence_id')
+            ->where('user_id', $userId)
+            ->where('is_open', true)
+            ->first();
+
+        return $latestPresence;
+    }
 }
