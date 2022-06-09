@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Traits\PresenceTrait;
 use App\Models\Presence;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PresenceController extends Controller
@@ -43,11 +44,11 @@ class PresenceController extends Controller
 
         $input = '19:00:02';
         $date = strtotime($input);
-        $open_time = date('H:i:s', $date);
+        $open_time = Carbon::now();
 
         $input = '21:10:00';
         $date = strtotime($input);
-        $close_time = date('H:i:s', $date);
+        $close_time = null;
 
         if (
             $presence::create([
