@@ -58,6 +58,7 @@ class PresenceController extends Controller
                 "room_id" => $validated_data->original['room']->room_id,
                 "open_time" => $open_time,
                 "close_time" => $close_time,
+                "is_open" => true,
             ])
         ) {
             return response()->json(
