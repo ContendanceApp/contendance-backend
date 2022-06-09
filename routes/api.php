@@ -46,7 +46,7 @@ Route::group(
         Route::post("/validate-schedule", [
             BeaconController::class,
             'searchClassAndSchedule',
-        ]);
+        ])->middleware('auth');
     }
 );
 
