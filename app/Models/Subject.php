@@ -9,4 +9,5 @@ class Subject extends Model
 {
     use HasFactory;
     protected $primaryKey = "subject_id";
+    protected $hidden = ["pivot"];
 }
