@@ -117,14 +117,14 @@ class PresenceController extends Controller
         //
     }
 
-    public function getActiveClass(Request $request)
+    public function getActiveClass($userId)
     {
-        $userId = $request->user_id;
         $presence = new Presence();
         $latestPresence = $presence
             ::latest('presence_id')
             ->where('user_id', $userId)
             ->where('is_open', true)
+            ->where('close_time', null)
             ->with(['room', 'subject_schedule'])
             ->first();
 
