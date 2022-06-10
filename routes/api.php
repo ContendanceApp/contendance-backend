@@ -59,7 +59,7 @@ Route::group(
         Route::post("/open", [PresenceController::class, 'store'])->middleware(
             'auth'
         );
-        Route::post("/close/{presenceId}", [
+        Route::post("/close", [
             PresenceController::class,
             'closeClass',
         ])->middleware('auth');
