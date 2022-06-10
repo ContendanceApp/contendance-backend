@@ -128,12 +128,16 @@ class PresenceController extends Controller
             ->with(['room', 'subject_schedule'])
             ->first();
 
-        return $latestPresence;
+        if ($latestPresence != null) {
+            return response()->json([$latestPresence], 200);
+        } else {
+            return response()->json([$latestPresence], 404);
+        }
     }
 
     public function closeClass(Request $request)
     {
-        $presenceId = $request->presenceId;
+        $presenceId = $request->presence_id;
         $close_time = Carbon::now();
 
         $presence = new Presence();
@@ -155,7 +159,7 @@ class PresenceController extends Controller
             [
                 'message' => "Kelas tidak ditemukan",
             ],
-            200
+            404
         );
     }
 }
