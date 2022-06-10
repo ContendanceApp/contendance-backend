@@ -129,9 +129,9 @@ class PresenceController extends Controller
             ->first();
 
         if ($latestPresence != null) {
-            return response()->json([$latestPresence], 200);
+            return response()->json($latestPresence, 200);
         } else {
-            return response()->json([$latestPresence], 404);
+            return response()->json($latestPresence, 404);
         }
     }
 
