@@ -130,4 +130,32 @@ class PresenceController extends Controller
 
         return $latestPresence;
     }
+
+    public function closeClass(Request $request)
+    {
+        $presenceId = $request->presenceId;
+        $close_time = Carbon::now();
+
+        $presence = new Presence();
+        $latestPresence = $presence
+            ::find($presenceId)
+            ->where('close_time', null)
+            ->update(['close_time' => $close_time]);
+
+        if ($latestPresence) {
+            return response()->json(
+                [
+                    'message' => "Kelas berhasil ditutup",
+                ],
+                200
+            );
+        }
+
+        return response()->json(
+            [
+                'message' => "Kelas tidak ditemukan",
+            ],
+            200
+        );
+    }
 }

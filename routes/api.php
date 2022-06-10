@@ -59,6 +59,10 @@ Route::group(
         Route::post("/open", [PresenceController::class, 'store'])->middleware(
             'auth'
         );
+        Route::post("/close/{presenceId}", [
+            PresenceController::class,
+            'closeClass',
+        ])->middleware('auth');
         Route::get("/active/{userId}", [
             PresenceController::class,
             'getActiveClass',
