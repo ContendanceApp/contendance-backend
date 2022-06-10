@@ -125,6 +125,7 @@ class PresenceController extends Controller
             ::latest('presence_id')
             ->where('user_id', $userId)
             ->where('is_open', true)
+            ->with(['room', 'subject_schedule'])
             ->first();
 
         return $latestPresence;
