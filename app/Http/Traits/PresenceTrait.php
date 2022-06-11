@@ -5,6 +5,7 @@ namespace App\Http\Traits;
 use App\Models\Room;
 use App\Models\Beacon;
 use App\Models\Presence;
+use App\Models\PresencesDetail;
 use App\Models\Subject;
 use App\Models\SubjectsSchedule;
 use App\Models\User;
@@ -149,7 +150,8 @@ trait PresenceTrait
                     ::where('user_id', $subject_schedule_detail->user_id)
                     ->first();
                 $presence_detail = $presence
-                    ::where(
+                    ::latest('presence_id')
+                    ->where(
                         'subject_schedule_id',
                         $subject_schedule_detail->subject_schedule_id
                     )
@@ -168,6 +170,7 @@ trait PresenceTrait
                             [
                                 "subject_schedule" => $subject_schedule_detail,
                                 "subject" => $subject_detail,
+                                "student" => $user_detail,
                                 "lecturer" => $lecturer_detail,
                                 "room" => $room_detail->original,
                                 "presence_detail" => $presence_detail,
@@ -205,6 +208,50 @@ trait PresenceTrait
                 ],
                 200
             );
+        }
+    }
+
+    public function activeClass($userId)
+    {
+        $presence = new Presence();
+        $presence_detail = new PresencesDetail();
+        $user = new User();
+        $user_detail = $user::where('user_id', $userId)->first('role_id');
+        if ($user_detail->role_id == 1) {
+            // if student
+            $presence_id = $presence_detail
+                ::latest('presence_id')
+                ->where('user_id', $userId)
+                ->where('is_inclass', true)
+                ->first('presence_id');
+            if ($presence_id != null) {
+                $latestPresence = $presence
+                    ->where('presence_id', $presence_id->presence_id)
+                    ->where('is_open', true)
+                    ->where('close_time', null)
+                    ->with(['room', 'subject_schedule'])
+                    ->first();
+            } else {
+                return response()->json(
+                    ['message' => 'Tidak ada kelas yang aktif'],
+                    404
+                );
+            }
+        } else {
+            // if lecturer
+            $latestPresence = $presence
+                ::latest('presence_id')
+                ->where('user_id', $userId)
+                ->where('is_open', true)
+                ->where('close_time', null)
+                ->with(['room', 'subject_schedule'])
+                ->first();
+        }
+
+        if ($latestPresence != null) {
+            return response()->json($latestPresence, 200);
+        } else {
+            return response()->json($latestPresence, 404);
         }
     }
 }

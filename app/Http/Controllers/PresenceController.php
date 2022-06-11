@@ -119,19 +119,20 @@ class PresenceController extends Controller
 
     public function getActiveClass($userId)
     {
-        $presence = new Presence();
-        $latestPresence = $presence
-            ::latest('presence_id')
-            ->where('user_id', $userId)
-            ->where('is_open', true)
-            ->where('close_time', null)
-            ->with(['room', 'subject_schedule'])
-            ->first();
+        // $presence = new Presence();
+        // $latestPresence = $presence
+        //     ::latest('presence_id')
+        //     ->where('user_id', $userId)
+        //     ->where('is_open', true)
+        //     ->where('close_time', null)
+        //     ->with(['room', 'subject_schedule'])
+        //     ->first();
+        $activeClass = $this->activeClass($userId);
 
-        if ($latestPresence != null) {
-            return response()->json($latestPresence, 200);
+        if ($activeClass != null) {
+            return response()->json($activeClass->original, 200);
         } else {
-            return response()->json($latestPresence, 404);
+            return response()->json($activeClass, 404);
         }
     }
 
