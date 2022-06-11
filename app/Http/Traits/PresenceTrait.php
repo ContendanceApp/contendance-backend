@@ -45,6 +45,23 @@ trait PresenceTrait
                 200
             );
         }
+
+        // $room_detail = Room::where([
+        //     ['beacon.proximity_uuid', $beacon_data->proximity_uuid],
+        //     ['beacon.major', $beacon_data->major],
+        //     ['beacon.minor', $beacon_data->minor],
+        // ])->first();
+
+        // if (!$room_detail) {
+        //     return response()->json(
+        //         [
+        //             'message' => 'Proximity UUID tidak terdaftar!',
+        //         ],
+        //         200
+        //     );
+        // } else {
+        //     return response()->json($room_detail, 200);
+        // }
     }
 
     public function validateSchedule(Request $request)
@@ -128,6 +145,9 @@ trait PresenceTrait
                 $subject_detail = $subject
                     ::where('subject_id', $subject_schedule_detail->subject_id)
                     ->first();
+                $lecturer_detail = $user
+                    ::where('user_id', $subject_schedule_detail->user_id)
+                    ->first();
                 $presence_detail = $presence
                     ::where(
                         'subject_schedule_id',
@@ -138,10 +158,17 @@ trait PresenceTrait
                 if (!is_null($presence_detail)) {
                     if (!is_null($user_detail)) {
                         return response()->json(
+                            // [
+                            //     "subject_schedule" => $subject_schedule_detail,
+                            //     "subject" => $subject_detail,
+                            //     "student" => $user_detail,
+                            //     "room" => $room_detail->original,
+                            //     "presence_detail" => $presence_detail,
+                            // ],
                             [
                                 "subject_schedule" => $subject_schedule_detail,
                                 "subject" => $subject_detail,
-                                "student" => $user_detail,
+                                "lecturer" => $lecturer_detail,
                                 "room" => $room_detail->original,
                                 "presence_detail" => $presence_detail,
                             ],

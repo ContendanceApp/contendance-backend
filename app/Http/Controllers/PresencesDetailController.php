@@ -50,7 +50,7 @@ class PresencesDetailController extends Controller
                     'presence_id' =>
                         $validated_data->original['presence_detail']
                             ->presence_id,
-                    'user_id' => $validated_data->original['student']->user_id,
+                    'user_id' => $validated_data->original['lecturer']->user_id,
                     'presence_time' => $presence_time,
                     'is_inclass' => true,
                 ])
