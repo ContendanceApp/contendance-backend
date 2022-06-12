@@ -16,11 +16,11 @@ class PresencesDetailsTableSeeder extends Seeder
      */
     public function run()
     {
-        PresencesDetail::create([
-            "presence_id" => 1,
-            "user_id" => 1,
-            "presence_time" => Carbon::now(),
-            "is_inclass" => false,
-        ]);
+        // PresencesDetail::create([
+        //     "presence_id" => 1,
+        //     "user_id" => 1,
+        //     "presence_time" => Carbon::now(),
+        //     "is_inclass" => false,
+        // ]);
     }
 }

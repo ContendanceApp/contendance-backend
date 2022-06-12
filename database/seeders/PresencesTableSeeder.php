@@ -16,13 +16,13 @@ class PresencesTableSeeder extends Seeder
      */
     public function run()
     {
-        Presence::create([
-            "subject_schedule_id" => 1,
-            "room_id" => 1,
-            "user_id" => 1,
-            "open_time" => Carbon::createFromTime(18, 02, 00),
-            "is_open" => true,
-            "close_time" => Carbon::createFromTime(19, 57, 00),
-        ]);
+        // Presence::create([
+        //     "subject_schedule_id" => 1,
+        //     "room_id" => 1,
+        //     "user_id" => 1,
+        //     "open_time" => Carbon::createFromTime(18, 02, 00),
+        //     "is_open" => true,
+        //     "close_time" => Carbon::createFromTime(19, 57, 00),
+        // ]);
     }
 }
