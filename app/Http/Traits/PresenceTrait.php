@@ -233,7 +233,7 @@ trait PresenceTrait
                     ->first();
             } else {
                 return response()->json(
-                    ['message' => 'Tidak ada kelas yang aktif'],
+                    ['message' => 'Belum ada kelas yang aktif'],
                     404
                 );
             }
@@ -251,7 +251,10 @@ trait PresenceTrait
         if ($latestPresence != null) {
             return response()->json($latestPresence, 200);
         } else {
-            return response()->json($latestPresence, 404);
+            return response()->json(
+                ['message' => 'Belum ada kelas yang aktif'],
+                404
+            );
         }
     }
 }
