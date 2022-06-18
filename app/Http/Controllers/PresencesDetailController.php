@@ -133,6 +133,6 @@ class PresencesDetailController extends Controller
                 'presences.subject_schedule.subject'
             )
             ->get();
-        return $hitories;
+        return response()->json(['data' => $hitories]);
     }
 }

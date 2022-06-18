@@ -176,6 +176,6 @@ class PresenceController extends Controller
             ->where('presence_date', $dateNow)
             ->with('room', 'subject_schedule', 'subject_schedule.subject')
             ->get();
-        return $hitories;
+        return response()->json(['data' => $hitories]);
     }
 }
