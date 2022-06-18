@@ -133,7 +133,7 @@ class PresencesDetailController extends Controller
                 'presences.subject_schedule',
                 'presences.subject_schedule.subject'
             )
-            ->latest('created_at')
+            ->orderBy('presence_time', 'desc')
             ->get();
         return response()->json(['data' => $hitories]);
     }
