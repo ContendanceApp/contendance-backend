@@ -6,6 +6,7 @@ use App\Http\Traits\PresenceTrait;
 use App\Models\Presence;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PresenceController extends Controller
 {
@@ -167,12 +168,12 @@ class PresenceController extends Controller
         );
     }
 
-    public function getPresenceHistoryById($userId)
+    public function getPresenceHistoryById()
     {
         $presence_detail = new Presence();
         $dateNow = date('Y-m-d', strtotime(Carbon::now()));
         $hitories = $presence_detail
-            ::where('user_id', $userId)
+            ::where('user_id', Auth::id())
             ->where('presence_date', $dateNow)
             ->with('room', 'subject_schedule', 'subject_schedule.subject')
             ->get();

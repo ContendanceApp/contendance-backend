@@ -71,11 +71,11 @@ Route::group(
             PresencesDetailController::class,
             'store',
         ])->middleware('auth');
-        Route::get("/history/student/{userId}", [
+        Route::get("/history/student", [
             PresencesDetailController::class,
             'getPresenceHistoryById',
         ])->middleware('auth');
-        Route::get("/history/lecturer/{userId}", [
+        Route::get("/history/lecturer", [
             PresenceController::class,
             'getPresenceHistoryById',
         ])->middleware('auth');

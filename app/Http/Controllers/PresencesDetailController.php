@@ -7,6 +7,7 @@ use App\Models\Presence;
 use App\Models\PresencesDetail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PresencesDetailController extends Controller
 {
@@ -119,12 +120,12 @@ class PresencesDetailController extends Controller
         //
     }
 
-    public function getPresenceHistoryById($userId)
+    public function getPresenceHistoryById()
     {
         $presence_detail = new PresencesDetail();
         $dateNow = date('Y-m-d', strtotime(Carbon::now()));
         $hitories = $presence_detail
-            ::where('user_id', $userId)
+            ::where('user_id', Auth::id())
             ->where('presence_date', $dateNow)
             ->with(
                 'presences',
