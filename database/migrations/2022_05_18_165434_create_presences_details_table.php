@@ -25,6 +25,7 @@ return new class extends Migration {
                 ->references("user_id")
                 ->on("users");
             $table->time("presence_time");
+            $table->date("presence_date");
             $table->boolean("is_inclass")->default(false);
             $table->timestamps();
         });

@@ -71,5 +71,9 @@ Route::group(
             PresencesDetailController::class,
             'store',
         ])->middleware('auth');
+        Route::get("/history/{userId}", [
+            PresencesDetailController::class,
+            'getPresenceHistoryById',
+        ])->middleware('auth');
     }
 );

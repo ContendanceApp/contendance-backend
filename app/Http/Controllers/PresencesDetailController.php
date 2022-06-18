@@ -53,6 +53,7 @@ class PresencesDetailController extends Controller
                     'user_id' => $validated_data->original['student']->user_id,
                     'presence_time' => $presence_time,
                     'is_inclass' => true,
+                    "presence_date" => date('Y-m-d', strtotime($presence_time)),
                 ])
             ) {
                 return response()->json(
@@ -116,5 +117,22 @@ class PresencesDetailController extends Controller
     public function destroy(PresencesDetail $presencesDetail)
     {
         //
+    }
+
+    public function getPresenceHistoryById($userId)
+    {
+        $presence_detail = new PresencesDetail();
+        $dateNow = date('Y-m-d', strtotime(Carbon::now()));
+        $hitories = $presence_detail
+            ::where('user_id', $userId)
+            ->where('presence_date', $dateNow)
+            ->with(
+                'presences',
+                'presences.room',
+                'presences.subject_schedule',
+                'presences.subject_schedule.subject'
+            )
+            ->get();
+        return $hitories;
     }
 }

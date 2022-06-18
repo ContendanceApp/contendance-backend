@@ -10,4 +10,9 @@ class PresencesDetail extends Model
     use HasFactory;
     protected $primaryKey = "presence_detail_id";
     protected $guarded = ["presence_detail_id", "created_at", "updated_at"];
+
+    public function presences()
+    {
+        return $this->hasOne(Presence::class, 'presence_id');
+    }
 }
