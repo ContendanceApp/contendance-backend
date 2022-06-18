@@ -176,6 +176,7 @@ class PresenceController extends Controller
             ::where('user_id', Auth::id())
             ->where('presence_date', $dateNow)
             ->with('room', 'subject_schedule', 'subject_schedule.subject')
+            ->latest('created_at')
             ->get();
         return response()->json(['data' => $hitories]);
     }
