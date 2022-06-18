@@ -32,6 +32,7 @@ return new class extends Migration {
             $table->boolean("is_open")->default(false);
             $table->time("open_time");
             $table->time("close_time")->nullable();
+            $table->date("presence_date");
             $table->timestamps();
         });
     }

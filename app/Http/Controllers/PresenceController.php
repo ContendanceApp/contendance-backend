@@ -50,6 +50,8 @@ class PresenceController extends Controller
         $date = strtotime($input);
         $close_time = null;
 
+        $presence_time = Carbon::now();
+
         if (
             $presence::create([
                 "user_id" => $request->user_id,
@@ -60,6 +62,7 @@ class PresenceController extends Controller
                 "open_time" => $open_time,
                 "close_time" => $close_time,
                 "is_open" => true,
+                "presence_date" => date('Y-m-d', strtotime($presence_time)),
             ])
         ) {
             return response()->json(
@@ -162,5 +165,17 @@ class PresenceController extends Controller
             ],
             404
         );
+    }
+
+    public function getPresenceHistoryById($userId)
+    {
+        $presence_detail = new Presence();
+        $dateNow = date('Y-m-d', strtotime(Carbon::now()));
+        $hitories = $presence_detail
+            ::where('user_id', $userId)
+            ->where('presence_date', $dateNow)
+            ->with('room', 'subject_schedule', 'subject_schedule.subject')
+            ->get();
+        return $hitories;
     }
 }

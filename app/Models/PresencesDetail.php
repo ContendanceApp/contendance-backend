@@ -13,6 +13,6 @@ class PresencesDetail extends Model
 
     public function presences()
     {
-        return $this->hasOne(Presence::class, 'presence_id');
+        return $this->belongsTo(Presence::class, 'presence_id');
     }
 }

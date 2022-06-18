@@ -25,4 +25,9 @@ class Presence extends Model
             'subject_schedule_id'
         );
     }
+
+    public function presence_detail()
+    {
+        return $this->hasMany(PresencesDetail::class, 'presence_id');
+    }
 }
