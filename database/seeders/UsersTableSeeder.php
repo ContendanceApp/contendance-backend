@@ -61,9 +61,31 @@ class UsersTableSeeder extends Seeder
         ]);
 
         User::create([
+            "fullname" => "Mahasiswa PENS",
+            "sid_eid" => "3120600029",
+            "email" => "mahasiswa@it.student.pens.ac.id",
+            "gender" => "L",
+            "email_verified_at" => Carbon::now(),
+            "password" => bcrypt("12345678"),
+            "role_id" => 1,
+            "study_group_id" => 1,
+        ]);
+
+        User::create([
             "fullname" => "Andhik Ampuh Yunanto",
             "sid_eid" => "199208022019031013",
             "email" => "andhik@it.lecturer.pens.ac.id",
+            "gender" => "L",
+            "email_verified_at" => Carbon::now(),
+            "password" => bcrypt("12345678"),
+            "role_id" => 2,
+            "study_group_id" => null,
+        ]);
+
+        User::create([
+            "fullname" => "Dosen PENS",
+            "sid_eid" => "199208022019031013",
+            "email" => "dosen@it.lecturer.pens.ac.id",
             "gender" => "L",
             "email_verified_at" => Carbon::now(),
             "password" => bcrypt("12345678"),
