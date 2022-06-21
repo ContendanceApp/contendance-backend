@@ -78,7 +78,7 @@ class UsersTableSeeder extends Seeder
             "gender" => "L",
             "email_verified_at" => Carbon::now(),
             "password" => bcrypt("12345678"),
-            "role_id" => 1,
+            "role_id" => 2,
             "study_group_id" => null,
         ]);
     }
