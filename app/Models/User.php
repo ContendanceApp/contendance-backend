@@ -62,6 +62,6 @@ class User extends Authenticatable implements JWTSubject
 
     public function studyGroup()
     {
-        return $this->hasOne(StudyGroup::class, 'study_group_id');
+        return $this->belongsTo(StudyGroup::class, 'study_group_id');
     }
 }
