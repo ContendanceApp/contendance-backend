@@ -18,7 +18,7 @@ class SubjectsSchedulesTableSeeder extends Seeder
     {
         SubjectsSchedule::create([
             "subject_id" => 1,
-            "user_id" => 2,
+            "user_id" => 6,
             "study_group_id" => 1,
             "room_id" => 1,
             "start_time" => Carbon::createFromTime(18, 00, 00),
