@@ -149,7 +149,7 @@ class PresenceController extends Controller
         $latestPresence = $presence
             ::find($presenceId)
             ->where('close_time', null)
-            ->update(['close_time' => $close_time]);
+            ->update(['close_time' => $close_time, 'is_open' => false]);
 
         if ($latestPresence) {
             return response()->json(
