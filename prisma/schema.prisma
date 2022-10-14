@@ -8,70 +8,30 @@ datasource db {
 }
 
 model beacons {
-  beacon_id      Int       @id @default(autoincrement())
-  proximity_uuid String    @db.VarChar(255)
+  beacon_id      Int      @id @default(autoincrement())
+  proximity_uuid String   @unique @db.VarChar(255)
   major          Int
   minor          Int
-  created_at     DateTime? @db.Timestamp(0)
-  updated_at     DateTime? @db.Timestamp(0)
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
   rooms          rooms[]
 }
 
 model days {
-  day_id    Int           @id @default(autoincrement())
-  day       String        @db.VarChar(255)
-  created_at DateTime?    @db.Timestamp(0)
-  updated_at DateTime?    @db.Timestamp(0)
-  
+  day_id             Int                  @id @default(autoincrement())
+  day                String               @db.VarChar(255)
+  created_at         DateTime             @default(now())
+  updated_at         DateTime             @updatedAt
+  subjects_schedules subjects_schedules[]
 }
 
 model devices {
-  device_id   Int       @id @default(autoincrement())
+  device_id   Int      @id @default(autoincrement())
   user_id     Int
-  mac_address String    @db.VarChar(255)
-  created_at  DateTime? @db.Timestamp(0)
-  updated_at  DateTime? @db.Timestamp(0)
-  users       users     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "devices_user_id_foreign")
-}
-
-model failed_jobs {
-  id         BigInt   @id @default(autoincrement())
-  uuid       String   @unique(map: "failed_jobs_uuid_unique") @db.VarChar(255)
-  connection String
-  queue      String
-  payload    String
-  exception  String
-  failed_at  DateTime @default(now()) @db.Timestamp(0)
-}
-
-model migrations {
-  id        Int    @id @default(autoincrement())
-  migration String @db.VarChar(255)
-  batch     Int
-}
-
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
-model password_resets {
-  email      String    @db.VarChar(255)
-  token      String    @db.VarChar(255)
-  created_at DateTime? @db.Timestamp(0)
-
-  @@index([email], map: "password_resets_email_index")
-  @@ignore
-}
-
-model personal_access_tokens {
-  id             BigInt    @id @default(autoincrement())
-  tokenable_type String    @db.VarChar(255)
-  tokenable_id   BigInt
-  name           String    @db.VarChar(255)
-  token          String    @unique(map: "personal_access_tokens_token_unique") @db.VarChar(64)
-  abilities      String?
-  last_used_at   DateTime? @db.Timestamp(0)
-  created_at     DateTime? @db.Timestamp(0)
-  updated_at     DateTime? @db.Timestamp(0)
-
-  @@index([tokenable_type, tokenable_id], map: "personal_access_tokens_tokenable_type_tokenable_id_index")
+  mac_address String   @db.VarChar(255)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  users       users    @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "devices_user_id_foreign")
 }
 
 model presences {
@@ -80,11 +40,12 @@ model presences {
   room_id             Int
   user_id             Int
   is_open             Boolean             @default(false)
+  waiting_room        Boolean             @default(false)
   open_time           DateTime            @db.Time(0)
   close_time          DateTime?           @db.Time(0)
-  presence_date       DateTime            @db.Date
-  created_at          DateTime?           @db.Timestamp(0)
-  updated_at          DateTime?           @db.Timestamp(0)
+  presence_date       DateTime            @default(now())
+  created_at          DateTime            @default(now())
+  updated_at          DateTime            @updatedAt
   rooms               rooms               @relation(fields: [room_id], references: [room_id], onDelete: NoAction, onUpdate: NoAction, map: "presences_room_id_foreign")
   subjects_schedules  subjects_schedules  @relation(fields: [subject_schedule_id], references: [subject_schedule_id], onDelete: NoAction, onUpdate: NoAction, map: "presences_subject_schedule_id_foreign")
   users               users               @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "presences_user_id_foreign")
@@ -98,17 +59,18 @@ model presences_details {
   presence_time      DateTime  @db.Time(0)
   presence_date      DateTime  @db.Date
   is_inclass         Boolean   @default(false)
-  created_at         DateTime? @db.Timestamp(0)
-  updated_at         DateTime? @db.Timestamp(0)
+  is_admited         Boolean   @default(false)
+  created_at         DateTime  @default(now())
+  updated_at         DateTime  @updatedAt
   presences          presences @relation(fields: [presence_id], references: [presence_id], onDelete: NoAction, onUpdate: NoAction, map: "presences_details_presence_id_foreign")
   users              users     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "presences_details_user_id_foreign")
 }
 
 model roles {
-  role_id    Int       @id @default(autoincrement())
-  role       String    @db.VarChar(255)
-  created_at DateTime? @db.Timestamp(0)
-  updated_at DateTime? @db.Timestamp(0)
+  role_id    Int      @id @default(autoincrement())
+  role       String   @db.VarChar(255)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
   users      users[]
 }
 
@@ -119,8 +81,8 @@ model rooms {
   room_code          String               @db.VarChar(255)
   location           String               @db.VarChar(255)
   description        String
-  created_at         DateTime?            @db.Timestamp(0)
-  updated_at         DateTime?            @db.Timestamp(0)
+  created_at         DateTime             @default(now())
+  updated_at         DateTime             @updatedAt
   beacons            beacons              @relation(fields: [beacon_id], references: [beacon_id], onDelete: NoAction, onUpdate: NoAction, map: "rooms_beacon_id_foreign")
   presences          presences[]
   subjects_schedules subjects_schedules[]
@@ -129,8 +91,8 @@ model rooms {
 model study_groups {
   study_group_id     Int                  @id @default(autoincrement())
   name               String               @db.VarChar(255)
-  created_at         DateTime?            @db.Timestamp(0)
-  updated_at         DateTime?            @db.Timestamp(0)
+  created_at         DateTime             @default(now())
+  updated_at         DateTime             @updatedAt
   subjects_schedules subjects_schedules[]
   users              users[]
 }
@@ -138,8 +100,8 @@ model study_groups {
 model subjects {
   subject_id         Int                  @id @default(autoincrement())
   name               String               @db.VarChar(255)
-  created_at         DateTime?            @db.Timestamp(0)
-  updated_at         DateTime?            @db.Timestamp(0)
+  created_at         DateTime             @default(now())
+  updated_at         DateTime             @updatedAt
   subjects_schedules subjects_schedules[]
 }
 
@@ -149,14 +111,16 @@ model subjects_schedules {
   user_id             Int
   study_group_id      Int
   room_id             Int
+  day_id              Int
   start_time          DateTime     @db.Time(0)
   finish_time         DateTime     @db.Time(0)
-  created_at          DateTime?    @db.Timestamp(0)
-  updated_at          DateTime?    @db.Timestamp(0)
+  created_at          DateTime     @default(now())
+  updated_at          DateTime     @updatedAt
   rooms               rooms        @relation(fields: [room_id], references: [room_id], onDelete: NoAction, onUpdate: NoAction, map: "subjects_schedules_room_id_foreign")
   study_groups        study_groups @relation(fields: [study_group_id], references: [study_group_id], onDelete: NoAction, onUpdate: NoAction, map: "subjects_schedules_study_group_id_foreign")
   subjects            subjects     @relation(fields: [subject_id], references: [subject_id], onDelete: NoAction, onUpdate: NoAction, map: "subjects_schedules_subject_id_foreign")
   users               users        @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "subjects_schedules_user_id_foreign")
+  days                days         @relation(fields: [day_id], references: [day_id], onDelete: NoAction, onUpdate: NoAction, map: "subjects_schedules_day_id_foreign")
   presences           presences[]
 }
 
@@ -164,15 +128,13 @@ model users {
   user_id            Int                  @id @default(autoincrement())
   fullname           String               @db.VarChar(255)
   email              String               @unique(map: "users_email_unique") @db.VarChar(255)
-  email_verified_at  DateTime?            @db.Timestamp(0)
   password           String               @db.VarChar(255)
-  sid_eid            BigInt
+  sid_eid            String
   gender             String               @db.VarChar(255)
   role_id            Int
   study_group_id     Int?
-  remember_token     String?              @db.VarChar(100)
-  created_at         DateTime?            @db.Timestamp(0)
-  updated_at         DateTime?            @db.Timestamp(0)
+  created_at         DateTime             @default(now())
+  updated_at         DateTime             @updatedAt
   roles              roles                @relation(fields: [role_id], references: [role_id], onDelete: NoAction, onUpdate: NoAction, map: "users_role_id_foreign")
   study_groups       study_groups?        @relation(fields: [study_group_id], references: [study_group_id], onDelete: NoAction, onUpdate: NoAction, map: "users_study_group_id_foreign")
   devices            devices[]

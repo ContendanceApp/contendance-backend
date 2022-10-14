@@ -1,32 +1,31 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const cors = require("cors");
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var beaconRouter = require('./routes/BeaconRoute');
-var devicesRouter = require('./routes/DevicesRoute');
-var presenceRouter = require('./routes/PresencesRoute');
-var rolesRouter = require('./routes/RolesRoute');
-var roomsRoute = require('./routes/RoomsRoute');
-var schedulesRoute = require('./routes/SchedulesRoute');
+const router = require("./routes/index");
 
-var app = express();
+const app = express();
 
-app.use(logger('dev'));
+// Socket IO
+const http = require("http");
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+
+// Web Socket
+io.on("connection", (socket) => {
+  console.log("a user connected");
+});
+
+app.use(logger("dev"));
+app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/beacons', beaconRouter);
-app.use('/devices', devicesRouter);
-app.use('/presences', presenceRouter);
-app.use('/roles', rolesRouter);
-app.use('/rooms', roomsRoute);
-app.use('/schedules', schedulesRoute);
+app.use("/api", router);
 
 module.exports = app;

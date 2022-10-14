@@ -1,146 +1,115 @@
-const { PrismaClient } = require("@prisma/client")
+const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 
 module.exports = {
-    getBeacons: async function(req, res){
-        try {
-            const response = await prisma.beacons.findMany();
-            res.status(200).json(response);
-        } catch (error) {
-            res.status(500).json({msg: error.message});
-        }
-    },
-
-    getBeaconsById: async function (req, res){
-        try {
-            const response = await prisma.beacons.findUnique({
-                where:{
-                    beacon_id: Number(req.params.id),
-                }
-            });
-            res.status(200).json(response);
-        } catch (error) {
-            res.status(404).json({msg: error.message});
-        }
-    },
-
-    createBeacons: async function(req, res){
-        const {major, minor, proximity_uuid} = req.body;
-        console.log(req.body)
-        try {
-            const beacons = await prisma.beacons.create({
-                data:{
-                    major: major,
-                    minor: minor,
-                    proximity_uuid: proximity_uuid,
-                }
-            });
-            res.status(201).json(beacons);
-        }catch (error) {
-            res.status(400).json({msg:error.message});
-        }
-    },
-
-    updateBeacons: async function(req, res){
-        const {major, minor, proximity_uuid} = req.body;
-        try {
-            const beacons = await prisma.beacons.update({
-                where:{
-                    beacon_id: Number(req.params.id),
-                },
-                data:{
-                    major: major,
-                    minor: minor,
-                    proximity_uuid: proximity_uuid,
-                }
-            });
-            res.status(201).json(beacons);
-        }catch (error) {
-            res.status(400).json({msg:error.message});
-        }
-    },
-
-    deleteBeacons: async function(req, res){
-        try {
-            const beacons = await prisma.beacons.delete({
-                where:{
-                    beacon_id: Number(req.params.id)
-                }
-            });
-            res.status(201).json(beacons);
-        }catch (error) {
-            res.status(400).json({msg:error.message});
-        }
+  getBeacons: async (req, res) => {
+    try {
+      const response = await prisma.beacons.findMany();
+      res.status(200).json({
+        message: "Data Retrieved!",
+        data: response,
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
     }
-}
+  },
 
-// export const getBeacons = async(req, res) =>{
-//     try {
-//         const response = await prisma.beacons.findMany();
-//         res.status(200).json(response);
-//     } catch (error) {
-//         res.status(500).json({msg: error.message});
-//     }
-// }
+  getBeaconsById: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const response = await prisma.beacons.findUnique({
+        where: {
+          beacon_id: Number(id),
+        },
+      });
+      if (!response) {
+        res.status(404).json({ message: "Data Not Found!" });
+        return;
+      }
+      res.status(200).json({
+        message: "Data Retrieved!",
+        data: response,
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
 
-// export const getBeaconById = async(req, res) =>{
-//     try {
-//         const response = await prisma.beacons.findUnique({
-//             where:{
-//                 id: Number(req.params.id)
-//             }
-//         });
-//         res.status(200).json(response);
-//     } catch (error) {
-//         res.status(404).json({msg: error.message});
-//     }
-// }
+  getBeaconByProximity: async (req, res) => {
+    try {
+      const { proximity_uuid } = req.body;
+      const response = await prisma.beacons.findFirst({
+        where: { proximity_uuid },
+      });
+      if (!response) {
+        res.status(404).json({ message: "Data Not Found!" });
+        return;
+      }
+      res.status(200).json({
+        message: "Data Retrieved!",
+        data: response,
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
 
-// export const createBeacon = async (req, res) =>{
-//     const {major, minor, proximity_uuid} = req.body;
-//     try {
-//         const beacons = await prisma.beacons.create({
-//             data:{
-//                 major: major,
-//                 minor: minor,
-//                 proximity_uuid: proximity_uuid,
-//             }
-//         });
-//         res.status(201).json(beacons);
-//     }catch (error) {
-//         res.status(400).json({msg:error.message});
-//     }
-// }
+  createBeacons: async (req, res) => {
+    try {
+      const { major, minor, proximity_uuid } = req.body;
+      const beacons = await prisma.beacons.create({
+        data: {
+          major: Number(major),
+          minor: Number(minor),
+          proximity_uuid,
+        },
+      });
+      res.status(201).json({
+        message: "Data Created!",
+        data: beacons,
+      });
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  },
 
-// export const updateBeacon = async (req, res) =>{
-//     const {major, minor, proximity_uuid} = req.body;
-//     try {
-//         const beacons = await prisma.beacons.update({
-//             where:{
-//                 beacon_id: Number(req.params.id),
-//             },
-//             data:{
-//                 major: major,
-//                 minor: minor,
-//                 proximity_uuid: proximity_uuid,
-//             }
-//         });
-//         res.status(201).json(beacons);
-//     }catch (error) {
-//         res.status(400).json({msg:error.message});
-//     }
-// }
+  updateBeacons: async (req, res) => {
+    try {
+      const { major, minor, proximity_uuid } = req.body;
+      const { id } = req.params;
+      const beacons = await prisma.beacons.update({
+        where: {
+          beacon_id: Number(id),
+        },
+        data: {
+          major: Number(major),
+          minor: Number(minor),
+          proximity_uuid: proximity_uuid,
+        },
+      });
+      res.status(200).json({
+        message: "Data Updated!",
+        data: beacons,
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
 
-// export const deleteBeacon = async (req, res) =>{
-//     try {
-//         const beacons = await prisma.beacons.delete({
-//             where:{
-//                 beacon_id: Number(req.params.id)
-//             }
-//         });
-//         res.status(201).json(beacons);
-//     }catch (error) {
-//         res.status(400).json({msg:error.message});
-//     }
-// }
+  deleteBeacons: async (req, res) => {
+    try {
+      const { id } = req.params;
+      await prisma.beacons.delete({
+        where: {
+          beacon_id: Number(id),
+        },
+      });
+      res.status(200).json({
+        message: "Data Deleted!",
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+};

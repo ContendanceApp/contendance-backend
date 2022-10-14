@@ -1,1 +1,168 @@
-GET http://localhost:3000/presences
+@host = http://localhost:3000/api
+@tokenAdmin = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1NSwiZW1haWwiOiJhZG1pbkBjb250ZW5kYW5jZS5jb20iLCJpYXQiOjE2NjQ4OTk3NDQsImV4cCI6MTY2NzQ5MTc0NH0.yWAbgrhPp8qRGtlKPNcI3kireL5EXHjwuROZPJ5yBeE
+@tokenDosen = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyOSwiZW1haWwiOiJuYWlsdXNAaXQubGVjdHVyZXIucGVucy5hYy5pZCIsImlhdCI6MTY2NDcyMjI4MCwiZXhwIjoxNjY3MzE0MjgwfQ.VhnJT7foozofPHg-b-NT2Ej1aahQ2KxpXL9ZjdTVl6A
+@tokenMahasiswa = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJlbWFpbCI6InNhdHRhckBpdC5zdHVkZW50LnBlbnMuYWMuaWQiLCJpYXQiOjE2NjQ5MDE0ODcsImV4cCI6MTY2NzQ5MzQ4N30.eEDgC77DtG1o_9jw7nmE_JRwYd7H3BpSKv8i6fi6zrg
+@contentType = application/json
+
+### Users
+
+# Login Admin
+POST {{host}}/users/login
+Content-Type: {{contentType}}
+
+{
+  "email": "admin@contendance.com",
+  "password": "password"
+}
+
+###
+
+# Login Dosen
+POST {{host}}/users/login
+Content-Type: {{contentType}}
+
+{
+  "email": "nailus@it.lecturer.pens.ac.id",
+  "password": "password"
+}
+###
+
+# Login Mahasiswa
+POST {{host}}/users/login
+Content-Type: {{contentType}}
+
+{
+  "email": "sattar@it.student.pens.ac.id",
+  "password": "password"
+}
+
+### Beacons
+
+# Get Beacons
+GET {{host}}/beacons
+Content-Type: {{contentType}}
+Authorization: bearer {{tokenDosen}}
+
+###
+
+# Find by Proximity
+POST {{host}}/beacons/find/proximity
+Content-Type: {{contentType}}
+Authorization: bearer {{tokenDosen}}
+
+{
+  "proximity": "fda50693-a4e2-4fb1-afcf-c6eb07647825"
+}
+
+###
+
+# Create Beacon
+POST {{host}}/beacons/create
+Content-Type: {{contentType}}
+Authorization: bearer {{tokenDosen}}
+
+{
+  "proximity_uuid": "pppfsfdp",
+  "major": 1,
+  "minor": 2
+}
+
+###
+
+# Delete Beacon
+DELETE {{host}}/beacons/delete/8
+Content-Type: {{contentType}}
+Authorization: bearer {{tokenDosen}}
+
+### Presence
+
+# Find Classes
+POST {{host}}/presences/find
+Content-Type: {{contentType}}
+Authorization: bearer {{tokenDosen}}
+
+{
+  "proximity": "fda50693-a4e2-4fb1-afcf-c6eb07647825"
+}
+
+###
+
+# Open Class
+POST {{host}}/presences/open
+Content-Type: {{contentType}}
+Authorization: bearer {{tokenDosen}}
+
+{
+  "subject_schedule_id": 1,
+  "room_id": 1
+}
+
+###
+
+# Close Class
+PUT {{host}}/presences/close
+Content-Type: {{contentType}}
+Authorization: bearer {{tokenDosen}}
+
+{
+  "presence_id": 12
+}
+
+###
+
+# Get Active Class
+GET {{host}}/presences/active
+Content-Type: {{contentType}}
+Authorization: bearer {{tokenMahasiswa}}
+
+###
+
+# Get Presence Detail
+GET {{host}}/presences-detail
+Content-Type: {{contentType}}
+Authorization: bearer {{tokenAdmin}}
+
+###
+
+# Create Presence Detail (Admin)
+POST {{host}}/presences-detail/create
+Content-Type: {{contentType}}
+Authorization: bearer {{tokenAdmin}}
+
+{
+  "presence_id": 3,
+  "user_id": 4
+}
+
+###
+
+# Create Presence Mahasiswa
+POST {{host}}/presences/create
+Content-Type: {{contentType}}
+Authorization: bearer {{tokenMahasiswa}}
+
+{
+  "presence_id": 5
+}
+
+###
+
+# Create Subject Schedule
+POST {{host}}/schedules/create
+Content-Type: {{contentType}}
+Authorization: bearer {{tokenAdmin}}
+
+ {
+    "subject_id": 2,
+    "user_id": 29,
+    "study_group_id": 1,
+    "room_id": 1,
+    "day_id": 3
+}
+
+###
+
+# Get Subject Schedule Today
+GET {{host}}/schedules/today
+Content-Type: {{contentType}}
+Authorization: bearer {{tokenMahasiswa}}
