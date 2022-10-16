@@ -2,7 +2,7 @@ FROM node:lts-alpine
 
 COPY package*.json ./
 
-RUN npm ci --only=production
+RUN npm i
 
 COPY ./ ./ 
 
