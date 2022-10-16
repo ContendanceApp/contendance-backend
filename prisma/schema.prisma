@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -66,6 +66,13 @@ model presences_details {
   users              users     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "presences_details_user_id_foreign")
 }
 
+model presences_statuses {
+  presence_status_id Int      @id @default(autoincrement())
+  status             String
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+}
+
 model roles {
   role_id    Int      @id @default(autoincrement())
   role       String   @db.VarChar(255)
@@ -91,6 +98,7 @@ model rooms {
 model study_groups {
   study_group_id     Int                  @id @default(autoincrement())
   name               String               @db.VarChar(255)
+  year               Int                  @db.Int
   created_at         DateTime             @default(now())
   updated_at         DateTime             @updatedAt
   subjects_schedules subjects_schedules[]

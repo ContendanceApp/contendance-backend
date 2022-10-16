@@ -55,6 +55,7 @@ router.delete(
 );
 
 // Presence & Presence Detail
+// Presence Controller
 router.get("/presences/", authMiddleware, presenceController.getPresences);
 router.post("/presences/find", authMiddleware, presenceController.findClasses);
 router.post("/presences/open", authMiddleware, presenceController.openPresence);
@@ -71,19 +72,25 @@ router.get(
 router.get(
   "/presences/:id",
   authMiddleware,
-  presenceController.getPresencesById
+  presenceController.getPresenceById
 );
 router.put(
   "/presences/update/:id",
   authMiddleware,
-  presenceController.updatePresences
+  presenceController.updatePresence
+);
+router.put(
+  "/presences/waiting-room/enable",
+  authMiddleware,
+  presenceController.toggleWaitingRoom
 );
 router.delete(
   "/presences/delete/:id",
   authMiddleware,
-  presenceController.deletePresences
+  presenceController.deletePresence
 );
 
+// Presence Detail Controller
 router.get(
   "/presences-detail",
   authMiddleware,
@@ -108,9 +115,30 @@ router.post(
   presenceDetailController.deletePresenceDetail
 );
 router.get(
+  "/presences-detail/:id",
+  authMiddleware,
+  roleCheckMiddleware.admin,
+  presenceDetailController.getPresenceDetailById
+);
+router.get(
+  "/presences-detail/:date",
+  authMiddleware,
+  presenceDetailController.getPresenceDetailByDate
+);
+router.get(
   "/presences/detail/:id",
   authMiddleware,
   presenceDetailController.getDetailClass
+);
+router.get(
+  "/presences/waiting-room/:id",
+  authMiddleware,
+  presenceDetailController.getListOfWaitingRoom
+);
+router.post(
+  "/presences/waiting-room/admit",
+  authMiddleware,
+  presenceDetailController.admitWaitingRoom
 );
 
 // Role

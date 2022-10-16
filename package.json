@@ -6,20 +6,28 @@
   },
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www"
+    "start": "dotenv -e .env.production node ./bin/www",
+    "dev": "dotenv -e .env.development nodemon ./bin/www",
+    "swagger-autogen": "node swagger.js",
+    "migrate-dev:dev": "dotenv -e .env.development -- npx prisma migrate dev --name init",
+    "migrate-reset:dev": "dotenv -e .env.development -- npx prisma migrate reset",
+    "db-push:dev": "dotenv -e .env.development -- npx prisma db push"
   },
   "dependencies": {
     "@prisma/client": "^4.3.1",
+    "and": "^0.0.3",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
+    "dotenv-cli": "^6.0.0",
     "express": "~4.16.1",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.4",
     "morgan": "~1.9.1",
-    "socket.io": "^4.5.2"
+    "socket.io": "^4.5.2",
+    "swagger-autogen": "^2.22.0",
+    "swagger-ui-express": "^4.5.0"
   },
   "devDependencies": {
     "prisma": "^4.4.0"
