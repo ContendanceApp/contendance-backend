@@ -14,6 +14,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         
+      - name: Create .env file
+        uses: SpicyPizza/create-envfile@v1.3.0
+        with:
+          envkey_DEBUG: false
+          envkey_DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          envkey_JWT_SECRET_TOKEN: ${{ secrets.JWT_SECRET_TOKEN }}
+          envkey_PORT: 5000
+        
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
           
@@ -32,14 +40,6 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DH_USERNAME }}/contendance-backend:latest
-          
-      - name: Create .env file
-        uses: SpicyPizza/create-envfile@v1.3.0
-        with:
-          envkey_DEBUG: false
-          envkey_DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          envkey_JWT_SECRET_TOKEN: ${{ secrets.JWT_SECRET_TOKEN }}
-          envkey_PORT: 5000
         
       - name: SSH Remote Commands
         uses: appleboy/ssh-action@v0.1.5
