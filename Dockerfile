@@ -6,7 +6,7 @@ RUN npm ci --only=production
 
 COPY ./ ./ 
 
-RUN npx prisma migrate reset --force
+RUN npm run migrate-reset:prod
 
 EXPOSE 5000
 
