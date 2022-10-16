@@ -51,4 +51,4 @@ jobs:
             docker rm contendance-backend
             docker image rm contendance-backend:latest
             docker pull ${{ secrets.DH_USERNAME }}/contendance-backend:latest
-            docker run -d -p 5000:5000 contendance-backend:latest
+            docker run -d -p 5000:5000 ${{ secrets.DH_USERNAME }}/contendance-backend:latest
