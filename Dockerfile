@@ -6,7 +6,7 @@ RUN npm i
 
 COPY ./ ./ 
 
-RUN NODE_ENV=production npx prisma migrate reset --force
+RUN npx prisma migrate reset --force
 
 EXPOSE 5000
 
