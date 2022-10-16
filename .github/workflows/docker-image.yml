@@ -26,6 +26,12 @@ jobs:
           username: ${{ secrets.DH_USERNAME }}
           password: ${{ secrets.DH_PASSWORD }}
           
+      - run: "Create init env"
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          JWT_SECRET_TOKEN: ${{ secrets.JWT_SECRET_TOKEN }}
+          PORT: 5000
+          
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
