@@ -18,6 +18,7 @@ router.get("/", function (req, res, next) {
 
 // User
 router.post("/users/login", userController.login);
+router.post("/users/me", userController.me);
 
 // Beacon
 router.get("/beacons", authMiddleware, beaconController.getBeacons);
