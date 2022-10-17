@@ -7,7 +7,7 @@
   },
   "host": "api.contendance.studio",
   "basePath": "/api",
-  "schemes": ["http", "https"],
+  "schemes": ["https"],
   "paths": {
     "/": {
       "get": {
