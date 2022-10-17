@@ -5,7 +5,7 @@
     "title": "REST API",
     "description": ""
   },
-  "host": "localhost:5000",
+  "host": "api.contendance.studio",
   "basePath": "/api",
   "schemes": ["http", "https"],
   "paths": {
