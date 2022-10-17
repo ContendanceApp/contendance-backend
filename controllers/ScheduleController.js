@@ -32,7 +32,7 @@ module.exports = {
 
   getSchedulesToday: async (req, res) => {
     try {
-      const { study_group_id } = req.user;
+      const { study_group_id, user_id } = req.user;
       const dayNow = moment().format("dddd");
 
       const { day_id } = await prisma.days.findFirst({
@@ -40,25 +40,49 @@ module.exports = {
         select: { day_id: true },
       });
 
-      const response = await prisma.subjects_schedules.findMany({
-        where: {
-          AND: {
-            study_group_id,
-            day_id,
-          },
-        },
-        include: {
-          subjects: {},
-          users: {
-            select: {
-              fullname: true,
+      let response = null;
+
+      if (study_group_id !== null) {
+        response = await prisma.subjects_schedules.findMany({
+          where: {
+            AND: {
+              study_group_id,
+              day_id,
             },
           },
-          days: {},
-          study_groups: {},
-          rooms: {},
-        },
-      });
+          include: {
+            subjects: {},
+            users: {
+              select: {
+                fullname: true,
+              },
+            },
+            days: {},
+            study_groups: {},
+            rooms: {},
+          },
+        });
+      } else {
+        response = await prisma.subjects_schedules.findMany({
+          where: {
+            AND: {
+              user_id,
+              day_id,
+            },
+          },
+          include: {
+            subjects: {},
+            users: {
+              select: {
+                fullname: true,
+              },
+            },
+            days: {},
+            study_groups: {},
+            rooms: {},
+          },
+        });
+      }
 
       response.forEach((item) => {
         item.start_time = new moment(item.start_time).format("HH:mm");
