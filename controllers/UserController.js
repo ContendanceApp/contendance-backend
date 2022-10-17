@@ -82,8 +82,8 @@ module.exports = {
           user_id,
         },
         include: {
-          roles,
-          study_groups,
+          roles: {},
+          study_groups: {},
         },
       });
       if (!response) {
