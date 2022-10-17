@@ -81,6 +81,10 @@ module.exports = {
         where: {
           user_id,
         },
+        include: {
+          roles,
+          study_groups,
+        },
       });
       if (!response) {
         return res.status(404).json({ message: "Not Found!" });
