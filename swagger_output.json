@@ -49,6 +49,23 @@
         }
       }
     },
+    "/users/me": {
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/beacons": {
       "get": {
         "description": "",
