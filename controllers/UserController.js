@@ -29,15 +29,11 @@ module.exports = {
             data: { user: checkAccount, token: accessToken },
           });
         } else {
-          res
-            .status(404)
-            .json({ message: "Email or password is invalid", data: {} });
+          res.status(404).json({ message: "Email or password is invalid" });
           return;
         }
       } else {
-        res
-          .status(404)
-          .json({ message: "Email or password is invalid", data: {} });
+        res.status(404).json({ message: "Email or password is invalid" });
         return;
       }
     } catch (error) {
