@@ -31,13 +31,13 @@ module.exports = {
         } else {
           res
             .status(404)
-            .json({ message: "Email or password is invalid", data: [] });
+            .json({ message: "Email or password is invalid", data: {} });
           return;
         }
       } else {
         res
           .status(404)
-          .json({ message: "Email or password is invalid", data: [] });
+          .json({ message: "Email or password is invalid", data: {} });
         return;
       }
     } catch (error) {
