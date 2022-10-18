@@ -43,13 +43,13 @@ module.exports = {
           presence_id: Number(req.params.id),
         },
         data: {
-          subject_schedule_id: subject_schedule_id,
-          room_id: room_id,
-          user_id: user_id,
-          is_open: is_open,
-          open_time: open_time,
-          close_time: close_time,
-          presence_date: presence_date,
+          subject_schedule_id: Number(subject_schedule_id),
+          room_id: Number(room_id),
+          user_id: Number(user_id),
+          is_open: Number(is_open),
+          open_time: Number(open_time),
+          close_time: Number(close_time),
+          presence_date: Number(presence_date),
         },
       });
       res.status(201).json(presences);
@@ -175,7 +175,7 @@ module.exports = {
 
       const presence_update = await prisma.presences.update({
         where: {
-          presence_id: presence.presence_id,
+          presence_id: Number(presence.presence_id),
         },
         data: {
           is_open: false,

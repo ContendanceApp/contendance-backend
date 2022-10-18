@@ -69,8 +69,8 @@ module.exports = {
 
       const response = await prisma.presences_details.create({
         data: {
-          presence_id,
-          user_id,
+          presence_id: Number(presence_id),
+          user_id: Number(user_id),
           presence_date: now,
           presence_time: now,
           created_at: now,
@@ -125,8 +125,8 @@ module.exports = {
       if (is_class_open.waiting_room === true) {
         response = await prisma.presences_details.create({
           data: {
-            presence_id,
-            user_id,
+            presence_id: Number(presence_id),
+            user_id: Number(user_id),
             is_inclass: true,
             presence_date: now,
             presence_time: now,
@@ -136,8 +136,8 @@ module.exports = {
       } else {
         response = await prisma.presences_details.create({
           data: {
-            presence_id,
-            user_id,
+            presence_id: Number(presence_id),
+            user_id: Number(user_id),
             is_admited: true,
             is_inclass: true,
             presence_date: now,
