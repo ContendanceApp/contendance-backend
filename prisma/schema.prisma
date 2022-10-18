@@ -108,6 +108,7 @@ model study_groups {
 model subjects {
   subject_id         Int                  @id @default(autoincrement())
   name               String               @db.VarChar(255)
+  acronym            String               @db.VarChar(15)
   created_at         DateTime             @default(now())
   updated_at         DateTime             @updatedAt
   subjects_schedules subjects_schedules[]

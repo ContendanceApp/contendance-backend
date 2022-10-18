@@ -5,12 +5,15 @@ const prisma = new PrismaClient();
 const subjectData = [
   {
     name: "Pengembangan Perangkat Lunak Berbasis Agile",
+    acronym: "PPL",
   },
   {
     name: "Praktikum Pengembangan Perangkat Lunak Berbasis Agile",
+    acronym: "PPPL",
   },
   {
     name: "Pengujian dan Penjaminan Kualitas Perangkat Lunak",
+    acronym: "SQA",
   },
 ];
 
