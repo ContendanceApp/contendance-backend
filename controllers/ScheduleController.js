@@ -43,6 +43,15 @@ module.exports = {
           },
         },
       });
+
+      response.forEach((item) => {
+        item.start_time = new moment(item.start_time).format("HH:mm");
+        item.finish_time = new moment(item.finish_time).format("HH:mm");
+
+        delete item.created_at;
+        delete item.updated_at;
+      });
+
       res.status(200).json({ message: "Data Retrieved!", data: response });
     } catch (error) {
       res.status(500).send(error.message);
