@@ -6,7 +6,7 @@ RUN npm i
 
 COPY ./ ./ 
 
-RUN npx prisma migrate reset --force
+RUN npx prisma migrate deploy
 
 RUN npm run swagger-autogen
 
