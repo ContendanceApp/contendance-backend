@@ -7,7 +7,42 @@ const prisma = new PrismaClient();
 module.exports = {
   getSchedules: async (req, res) => {
     try {
-      const response = await prisma.subjects_schedules.findMany();
+      const response = await prisma.subjects_schedules.findMany({
+        include: {
+          days: {
+            select: {
+              day: true,
+            },
+          },
+          subjects: {
+            select: {
+              name: true,
+            },
+          },
+          rooms: {
+            select: {
+              name: true,
+              room_code: true,
+              location: true,
+            },
+          },
+          users: {
+            select: {
+              fullname: true,
+              roles: {
+                select: {
+                  role: true,
+                },
+              },
+            },
+          },
+          study_groups: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      });
       res.status(200).json({ message: "Data Retrieved!", data: response });
     } catch (error) {
       res.status(500).send(error.message);
