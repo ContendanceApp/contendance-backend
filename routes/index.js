@@ -116,7 +116,7 @@ router.post(
   presenceDetailController.deletePresenceDetail
 );
 router.get(
-  "/presences-detail/:id",
+  "/presences-detail/:presence_id/:user_id",
   authMiddleware,
   roleCheckMiddleware.admin,
   presenceDetailController.getPresenceDetailById

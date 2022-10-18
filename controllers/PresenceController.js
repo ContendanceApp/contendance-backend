@@ -39,7 +39,7 @@ module.exports = {
       presence_date,
     } = req.body;
     try {
-      const presences = await prisma.presences.update({
+      const responses = await prisma.presences.update({
         where: {
           presence_id: Number(req.params.id),
         },
@@ -47,13 +47,13 @@ module.exports = {
           subject_schedule_id: Number(subject_schedule_id),
           room_id: Number(room_id),
           user_id: Number(user_id),
-          is_open: Number(is_open),
-          open_time: Number(open_time),
-          close_time: Number(close_time),
-          presence_date: Number(presence_date),
+          is_open,
+          open_time,
+          close_time,
+          presence_date,
         },
       });
-      res.status(201).json(presences);
+      res.status(200).json({ message: "Data Updated!", data: responses });
     } catch (error) {
       res.status(500).send(error.message);
     }
@@ -61,12 +61,12 @@ module.exports = {
 
   deletePresence: async (req, res) => {
     try {
-      const presences = await prisma.presences.delete({
+      await prisma.presences.delete({
         where: {
           presence_id: Number(req.params.id),
         },
       });
-      res.status(201).json(presences);
+      res.status(200).json({ message: "Data Deleted!" });
     } catch (error) {
       res.status(500).send(error.message);
     }
@@ -87,7 +87,7 @@ module.exports = {
       }
 
       const room = await prisma.rooms.findFirst({
-        where: { beacon_id: beacon.beacon_id },
+        where: { beacon_id: Number(beacon.beacon_id) },
       });
       if (!room) {
         res.status(404).json({ message: "Room Not Found!" });
@@ -163,7 +163,7 @@ module.exports = {
       const presence = await prisma.presences.findFirst({
         where: {
           AND: {
-            presence_id,
+            presence_id: Number(presence_id),
             is_open: true,
             close_time: null,
           },
@@ -223,7 +223,7 @@ module.exports = {
 
       const response = await prisma.presences.update({
         where: {
-          presence_id,
+          presence_id: Number(presence_id),
         },
         data: {
           waiting_room: enable_waiting_room,

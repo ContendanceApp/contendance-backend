@@ -1,5 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 const moment = require("moment");
+const moment_tz = require("moment-timezone");
 const prisma = new PrismaClient();
 
 module.exports = {
@@ -14,11 +15,14 @@ module.exports = {
 
   getPresenceDetailById: async (req, res) => {
     try {
-      const { user_id } = req.params;
+      const { presence_id, user_id } = req.params;
 
       const response = await prisma.presences_details.findMany({
         where: {
-          user_id,
+          AND: {
+            presence_id: Number(presence_id),
+            user_id: Number(user_id),
+          },
         },
       });
       if (!response) {
@@ -40,7 +44,7 @@ module.exports = {
         where: {
           AND: {
             user_id,
-            presence_date: date,
+            presence_date: date.toISOString(),
           },
         },
       });
@@ -57,11 +61,11 @@ module.exports = {
   createPresenceDetail: async (req, res) => {
     try {
       const { presence_id, user_id } = req.body;
-      const now = new moment().format();
+      const now = moment_tz().tz("Asia/Jakarta").format();
 
       const is_presence_exist = await prisma.presences.findFirst({
         where: {
-          presence_id,
+          presence_id: Number(presence_id),
         },
       });
       if (!is_presence_exist)
@@ -88,7 +92,7 @@ module.exports = {
       const { presence_detail_id } = req.params;
       const response = await prisma.presences_details.delete({
         where: {
-          presence_detail_id,
+          presence_detail_id: Number(presence_detail_id),
         },
       });
 
