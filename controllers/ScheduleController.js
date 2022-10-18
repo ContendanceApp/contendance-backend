@@ -1,5 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 const moment = require("moment");
+const moment_tz = require("moment-timezone");
 
 const prisma = new PrismaClient();
 
@@ -33,7 +34,7 @@ module.exports = {
   getSchedulesToday: async (req, res) => {
     try {
       const { study_group_id, user_id } = req.user;
-      const dayNow = moment().tz("Asia/Jakarta").format("dddd");
+      const dayNow = moment_tz().tz("Asia/Jakarta").format("dddd");
 
       const { day_id } = await prisma.days.findFirst({
         where: { day: dayNow },
