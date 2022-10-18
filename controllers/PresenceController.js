@@ -1,5 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 const moment = require("moment");
+const moment_tz = require("moment-timezone");
 moment.locale("id");
 
 const prisma = new PrismaClient();
@@ -75,7 +76,7 @@ module.exports = {
     try {
       const { proximity } = req.body;
       const user_id = req.user.user_id;
-      const dayNow = moment().format("dddd");
+      const dayNow = moment_tz().tz("Asia/Jakarta").format("dddd");
 
       const beacon = await prisma.beacons.findFirst({
         where: { proximity_uuid: proximity },
