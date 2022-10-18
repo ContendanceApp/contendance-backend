@@ -137,9 +137,9 @@ module.exports = {
 
       const presence = await prisma.presences.create({
         data: {
-          subject_schedule_id,
-          room_id,
-          user_id,
+          subject_schedule_id: Number(subject_schedule_id),
+          room_id: Number(room_id),
+          user_id: Number(user_id),
           is_open: true,
           waiting_room: false,
           open_time: new moment().format(),
