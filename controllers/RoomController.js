@@ -6,7 +6,7 @@ module.exports = {
   getRooms: async function (req, res) {
     try {
       const response = await prisma.rooms.findMany();
-      res.status(200).json(response);
+      res.status(200).json({ message: "Data Retrieved!", data: response });
     } catch (error) {
       res.status(500).send(error.message);
     }
@@ -19,7 +19,7 @@ module.exports = {
           room_id: Number(req.params.id),
         },
       });
-      res.status(200).json(response);
+      res.status(200).json({ message: "Data Retrieved!", data: response });
     } catch (error) {
       res.status(500).send(error.message);
     }
@@ -30,11 +30,11 @@ module.exports = {
     try {
       const rooms = await prisma.rooms.create({
         data: {
-          beacon_id: beacon_id,
-          name: name,
-          room_code: room_code,
-          location: location,
-          description: description,
+          beacon_id: Number(beacon_id),
+          name,
+          room_code,
+          location,
+          description,
         },
       });
       res.status(201).json(rooms);
@@ -46,19 +46,19 @@ module.exports = {
   updateRooms: async function (req, res) {
     const { beacon_id, name, room_code, location, description } = req.body;
     try {
-      const rooms = await prisma.rooms.update({
+      const response = await prisma.rooms.update({
         where: {
           room_id: Number(req.params.id),
         },
         data: {
-          beacon_id: beacon_id,
-          name: name,
-          room_code: room_code,
-          location: location,
-          description: description,
+          beacon_id: Number(beacon_id),
+          name,
+          room_code,
+          location,
+          description,
         },
       });
-      res.status(201).json(rooms);
+      res.status(200).json({ message: "Data Retrieved!", data: response });
     } catch (error) {
       res.status(500).send(error.message);
     }
@@ -66,12 +66,12 @@ module.exports = {
 
   deleteRooms: async function (req, res) {
     try {
-      const rooms = await prisma.rooms.delete({
+      await prisma.rooms.delete({
         where: {
           room_id: Number(req.params.id),
         },
       });
-      res.status(201).json(rooms);
+      res.status(200).json({ message: "Data Deleted!" });
     } catch (error) {
       res.status(500).send(error.message);
     }

@@ -42,17 +42,17 @@ router.delete(
 
 // Device
 router.get("/devices/", authMiddleware, devicesController.getDevices);
-router.post("/devices/create", authMiddleware, devicesController.createDevices);
-router.get("/devices/:id", authMiddleware, devicesController.getDevicesById);
+router.post("/devices/create", authMiddleware, devicesController.createDevice);
+router.get("/devices/:id", authMiddleware, devicesController.getDeviceById);
 router.put(
   "/devices/update/:id",
   authMiddleware,
-  devicesController.updateDevices
+  devicesController.updateDevice
 );
 router.delete(
   "/devices/delete/:id",
   authMiddleware,
-  devicesController.deleteDevices
+  devicesController.deleteDevice
 );
 
 // Presence & Presence Detail

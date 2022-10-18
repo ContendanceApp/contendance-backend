@@ -6,44 +6,44 @@ module.exports = {
   getDevices: async function (req, res) {
     try {
       const response = await prisma.devices.findMany();
-      res.status(200).json(response);
+      res.status(200).json({ message: "Data Retrieved!", data: response });
     } catch (error) {
-      res.status(500).json({ msg: error.message });
+      res.status(500).send(error.message);
     }
   },
 
-  getDevicesById: async function (req, res) {
+  getDeviceById: async function (req, res) {
     try {
       const response = await prisma.devices.findUnique({
         where: {
           device_id: Number(req.params.id),
         },
       });
-      res.status(200).json(response);
+      res.status(200).json({ message: "Data Retrieved!", data: response });
     } catch (error) {
-      res.status(404).json({ msg: error.message });
+      res.status(500).send(error.message);
     }
   },
 
-  createDevices: async function (req, res) {
+  createDevice: async function (req, res) {
     const { user_id, mac_address } = req.body;
     try {
-      const devices = await prisma.devices.create({
+      const response = await prisma.devices.create({
         data: {
           user_id: user_id,
           mac_address: mac_address,
         },
       });
-      res.status(201).json(devices);
+      res.status(201).json({ message: "Data Created!", data: response });
     } catch (error) {
-      res.status(400).json({ msg: error.message });
+      res.status(500).send(error.message);
     }
   },
 
-  updateDevices: async function (req, res) {
-    const { user_id, mac_address } = req.body;
+  updateDevice: async function (req, res) {
     try {
-      const beacons = await prisma.devices.update({
+      const { user_id, mac_address } = req.body;
+      const response = await prisma.devices.update({
         where: {
           device_id: Number(req.params.id),
         },
@@ -52,22 +52,22 @@ module.exports = {
           mac_address: mac_address,
         },
       });
-      res.status(201).json(devices);
+      res.status(200).json({ message: "Data Updated!", data: response });
     } catch (error) {
-      res.status(400).json({ msg: error.message });
+      res.status(500).send(error.message);
     }
   },
 
-  deleteDevices: async function (req, res) {
+  deleteDevice: async function (req, res) {
     try {
-      const beacons = await prisma.devices.delete({
+      await prisma.devices.delete({
         where: {
           device_id: Number(req.params.id),
         },
       });
-      res.status(201).json(devices);
+      res.status(200).json({ message: "Data Deleted!" });
     } catch (error) {
-      res.status(400).json({ msg: error.message });
+      res.status(500).send(error.message);
     }
   },
 };
