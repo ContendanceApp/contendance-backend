@@ -43,8 +43,7 @@ module.exports = {
         where: { proximity_uuid },
       });
       if (!response) {
-        res.status(404).json({ message: "Data Not Found!" });
-        return;
+        return res.status(404).json({ message: "Data Not Found!" });
       }
       res.status(200).json({
         message: "Data Retrieved!",

@@ -275,6 +275,15 @@ const userData = [
     study_group_id: null,
   },
   {
+    fullname: "Hero Yudo Martono ST, MT",
+    sid_eid: "197811032005011002",
+    email: "hero@it.lecturer.pens.ac.id",
+    gender: "L",
+    password: bcrypt.hashSync("password"),
+    role_id: 2,
+    study_group_id: null,
+  },
+  {
     fullname: "Santi",
     sid_eid: "3120600031",
     email: "santi@it.student.pens.ac.id",

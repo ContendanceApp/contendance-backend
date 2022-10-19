@@ -49,6 +49,15 @@ const subjectScheduleData = [
     start_time: new moment("14:40", "HH:mm").format(),
     finish_time: new moment("17:10", "HH:mm").format(),
   },
+  {
+    subject_id: 4,
+    user_id: 31,
+    study_group_id: 1,
+    room_id: 1,
+    day_id: 3,
+    start_time: new moment("13:00", "HH:mm").format(),
+    finish_time: new moment("16:20", "HH:mm").format(),
+  },
 ];
 
 async function main() {

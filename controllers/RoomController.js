@@ -12,7 +12,7 @@ module.exports = {
     }
   },
 
-  getRoomsById: async function (req, res) {
+  getRoomById: async function (req, res) {
     try {
       const response = await prisma.rooms.findUnique({
         where: {

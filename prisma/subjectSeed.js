@@ -15,6 +15,10 @@ const subjectData = [
     name: "Pengujian dan Penjaminan Kualitas Perangkat Lunak",
     acronym: "SQA",
   },
+  {
+    name: "Workshop Aplikasi dan Komputasi Awan",
+    acronym: "WCC",
+  },
 ];
 
 async function main() {

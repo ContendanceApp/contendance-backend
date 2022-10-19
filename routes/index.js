@@ -59,10 +59,16 @@ router.delete(
 // Presence Controller
 router.get("/presences/", authMiddleware, presenceController.getPresences);
 router.post("/presences/find", authMiddleware, presenceController.findClasses);
-router.post("/presences/open", authMiddleware, presenceController.openPresence);
+router.post(
+  "/presences/open",
+  authMiddleware,
+  roleCheckMiddleware.dosen,
+  presenceController.openPresence
+);
 router.put(
   "/presences/close",
   authMiddleware,
+  roleCheckMiddleware.dosen,
   presenceController.closePresence
 );
 router.get(
@@ -127,7 +133,7 @@ router.get(
   presenceDetailController.getPresenceDetailByDate
 );
 router.get(
-  "/presences/detail/:id",
+  "/presences/detail/:presence_id",
   authMiddleware,
   presenceDetailController.getDetailClass
 );
@@ -154,7 +160,7 @@ router.get("/rooms/", authMiddleware, roomsController.getRooms);
 router.post("/rooms/create", authMiddleware, roomsController.createRooms);
 router.put("/rooms/update/:id", authMiddleware, roomsController.updateRooms);
 router.delete("/rooms/delete/:id", authMiddleware, roomsController.deleteRooms);
-router.get("/rooms/:id", authMiddleware, roomsController.getRoomsById);
+router.get("/rooms/:id", authMiddleware, roomsController.getRoomById);
 
 // Schedule
 router.get("/schedules/", authMiddleware, schedulesController.getSchedules);

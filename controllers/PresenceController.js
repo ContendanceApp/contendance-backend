@@ -135,6 +135,39 @@ module.exports = {
     try {
       const { subject_schedule_id, room_id } = req.body;
       const user_id = req.user.user_id;
+      const dayNow = new moment().format("dddd");
+
+      const day = await prisma.days.findFirst({
+        where: {
+          day: dayNow,
+        },
+      });
+
+      const is_legal = await prisma.subjects_schedules.findFirst({
+        where: {
+          AND: {
+            subject_schedule_id: Number(subject_schedule_id),
+            user_id,
+            day_id: day.day_id,
+          },
+        },
+      });
+      if (!is_legal)
+        return res.status(403).json({ message: "Illegal Action!" });
+
+      const is_exist = await prisma.presences.findFirst({
+        where: {
+          AND: {
+            subject_schedule_id: Number(subject_schedule_id),
+            room_id: Number(room_id),
+            user_id,
+            is_open: true,
+            close_time: null,
+          },
+        },
+      });
+      if (is_exist)
+        return res.status(403).json({ message: "Kelas sudah terbuka!" });
 
       const presence = await prisma.presences.create({
         data: {
@@ -148,6 +181,12 @@ module.exports = {
           presence_date: new moment().format(),
         },
       });
+
+      presence.open_time = new moment(presence.open_time).format("HH:mm");
+      presence.presence_date = new moment(presence.presence_date).format(
+        "dddd, D MMMM yyy HH:mm"
+      );
+
       res
         .status(201)
         .json({ message: "Kelas Berhasil Dibuka!", data: presence });
@@ -184,6 +223,25 @@ module.exports = {
         },
       });
 
+      await prisma.presences_details.updateMany({
+        where: {
+          presence_id: Number(presence.presence_id),
+        },
+        data: {
+          is_inclass: false,
+        },
+      });
+
+      presence_update.open_time = new moment(presence_update.open_time).format(
+        "HH:mm"
+      );
+      presence_update.close_time = new moment(
+        presence_update.close_time
+      ).format("HH:mm");
+      presence_update.presence_date = new moment(
+        presence_update.presence_date
+      ).format("dddd, D MMMM yyy HH:mm");
+
       res
         .status(201)
         .json({ message: "Kelas Ditutup!", data: presence_update });
@@ -194,24 +252,74 @@ module.exports = {
 
   getActivePresence: async (req, res) => {
     try {
-      const user_id = req.user.user_id;
-      const result = await prisma.presences_details.findFirst({
-        orderBy: {
-          created_at: "desc",
-        },
-        where: {
-          AND: {
-            user_id,
-            is_inclass: true,
+      const { user_id, role_id } = req.user;
+      let response = null;
+
+      if (role_id === 1)
+        response = await prisma.presences_details.findFirst({
+          orderBy: {
+            created_at: "desc",
           },
-        },
-      });
-      if (!result) {
-        res.status(404).json({ message: "Data Not Found!", data: result });
+          where: {
+            AND: {
+              user_id,
+              is_inclass: true,
+              presences: {
+                is_open: true,
+              },
+            },
+          },
+          include: {
+            presences: true,
+          },
+        });
+      else if (role_id === 2)
+        response = await prisma.presences.findFirst({
+          orderBy: {
+            created_at: "desc",
+          },
+          where: {
+            AND: {
+              user_id,
+              close_time: null,
+            },
+          },
+          include: {
+            subjects_schedules: {
+              select: {
+                start_time: true,
+                finish_time: true,
+                subjects: {
+                  select: {
+                    name: true,
+                  },
+                },
+              },
+            },
+            users: {
+              select: {
+                fullname: true,
+              },
+            },
+          },
+        });
+      if (!response) {
+        res.status(404).json({ message: "Data Not Found!", data: response });
         return;
       }
 
-      res.status(200).json({ message: "Data Retrieved!", data: result });
+      response.open_time = new moment(response.open_time).format("HH:mm");
+      response.presence_date = new moment(response.presence_date).format(
+        "dddd, D MMMM yyy HH:mm"
+      );
+      response.subjects_schedules.start_time = new moment(
+        response.subjects_schedules.start_time
+      ).format("HH:mm");
+      response.subjects_schedules.finish_time = new moment(
+        response.subjects_schedules.finish_time
+      ).format("HH:mm");
+
+      res.status(200).json({ message: "Data Retrieved!", data: response });
     } catch (error) {
       res.status(500).send(error.message);
     }
