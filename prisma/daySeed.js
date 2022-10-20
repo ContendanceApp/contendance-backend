@@ -16,7 +16,7 @@ const dayData = [
     day: "Kamis",
   },
   {
-    day: "Jum'at",
+    day: "Jumat",
   },
   {
     day: "Sabtu",

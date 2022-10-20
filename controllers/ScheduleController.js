@@ -109,6 +109,9 @@ module.exports = {
         });
       } else {
         response = await prisma.subjects_schedules.findMany({
+          orderBy: {
+            start_time: "asc",
+          },
           where: {
             AND: {
               user_id,

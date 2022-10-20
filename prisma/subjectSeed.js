@@ -19,6 +19,14 @@ const subjectData = [
     name: "Workshop Aplikasi dan Komputasi Awan",
     acronym: "WCC",
   },
+  {
+    name: "Workshop Rekayasa Ulang Kode",
+    acronym: "WRUK",
+  },
+  {
+    name: "Workshop Administrasi Basis Data",
+    acronym: "WABD",
+  },
 ];
 
 async function main() {

@@ -108,6 +108,7 @@ module.exports = {
           study_groups: { select: { name: true } },
           subjects: { select: { name: true } },
           users: { select: { fullname: true } },
+          days: { select: { day_id: true, day: true } },
         },
       });
       if (!subjects_schedule) {
@@ -180,9 +181,38 @@ module.exports = {
           close_time: null,
           presence_date: new moment().format(),
         },
+        include: {
+          users: {
+            select: {
+              fullname: true,
+              sid_eid: true,
+            },
+          },
+          rooms: {
+            select: {
+              name: true,
+              room_code: true,
+              location: true,
+            },
+          },
+          subjects_schedules: {
+            select: {
+              start_time: true,
+              finish_time: true,
+              subjects: true,
+              study_groups: true,
+            },
+          },
+        },
       });
 
       presence.open_time = new moment(presence.open_time).format("HH:mm");
+      presence.subjects_schedules.start_time = new moment(
+        presence.subjects_schedules.start_time
+      ).format("HH:mm");
+      presence.subjects_schedules.finish_time = new moment(
+        presence.subjects_schedules.finish_time
+      ).format("HH:mm");
       presence.presence_date = new moment(presence.presence_date).format(
         "dddd, D MMMM yyy HH:mm"
       );
@@ -252,11 +282,12 @@ module.exports = {
 
   getActivePresence: async (req, res) => {
     try {
-      const { user_id, role_id } = req.user;
+      let { user_id, role_id } = req.user;
+      role_id = Number(role_id);
       let response = null;
 
-      if (role_id === 1)
-        response = await prisma.presences_details.findFirst({
+      if (role_id === 1) {
+        const presence_detail_data = await prisma.presences_details.findFirst({
           orderBy: {
             created_at: "desc",
           },
@@ -273,7 +304,48 @@ module.exports = {
             presences: true,
           },
         });
-      else if (role_id === 2)
+        if (!presence_detail_data) {
+          res.status(404).json({ message: "Data Not Found!" });
+          return;
+        }
+
+        response = await prisma.presences.findFirst({
+          orderBy: {
+            created_at: "desc",
+          },
+          where: {
+            AND: {
+              presence_id: presence_detail_data.presence_id,
+              close_time: null,
+            },
+          },
+          include: {
+            subjects_schedules: {
+              select: {
+                start_time: true,
+                finish_time: true,
+                subjects: {
+                  select: {
+                    name: true,
+                  },
+                },
+              },
+            },
+            rooms: {
+              select: {
+                name: true,
+                room_code: true,
+                location: true,
+              },
+            },
+            users: {
+              select: {
+                fullname: true,
+              },
+            },
+          },
+        });
+      } else if (role_id === 2)
         response = await prisma.presences.findFirst({
           orderBy: {
             created_at: "desc",
@@ -294,6 +366,18 @@ module.exports = {
                     name: true,
                   },
                 },
+                study_groups: {
+                  select: {
+                    name: true,
+                  },
+                },
+              },
+            },
+            rooms: {
+              select: {
+                name: true,
+                room_code: true,
+                location: true,
               },
             },
             users: {
@@ -339,6 +423,139 @@ module.exports = {
       });
 
       res.status(200).json({ message: "Data Updated!", data: response });
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  },
+
+  getPresenceHistory: async (req, res) => {
+    try {
+      const { user_id, role_id } = req.user;
+      let response = null;
+
+      if (role_id == 1) {
+        response = await prisma.presences_details.findMany({
+          orderBy: {
+            created_at: "desc",
+          },
+          where: {
+            user_id,
+          },
+          include: {
+            presences: {
+              include: {
+                rooms: {
+                  select: {
+                    name: true,
+                    room_code: true,
+                    location: true,
+                  },
+                },
+                subjects_schedules: {
+                  include: {
+                    subjects: {},
+                    study_groups: {},
+                  },
+                },
+              },
+            },
+          },
+        });
+
+        response.forEach((item) => {
+          item.presence_time = new moment(item.presence_time).format("HH:mm");
+          item.presences.open_time = new moment(
+            item.presences.open_time
+          ).format("HH:mm");
+          if (item.presences.close_time !== null)
+            item.presences.close_time = new moment(
+              item.presences.close_time
+            ).format("HH:mm");
+          item.presences.subjects_schedules.start_time = new moment(
+            item.presences.subjects_schedules.start_time
+          ).format("HH:mm");
+          item.presences.subjects_schedules.finish_time = new moment(
+            item.presences.subjects_schedules.finish_time
+          ).format("HH:mm");
+          item.presence_date = new moment(item.presence_date).format(
+            "dddd, D MMMM yyy HH:mm"
+          );
+          item.presences.presence_date = new moment(item.presence_date).format(
+            "dddd, D MMMM yyy HH:mm"
+          );
+
+          delete item.created_at;
+          delete item.updated_at;
+          delete item.presences.created_at;
+          delete item.presences.updated_at;
+          delete item.presences.user_id;
+          delete item.presences.room_id;
+          delete item.presences.subject_schedule_id;
+          delete item.presences.subjects_schedules.created_at;
+          delete item.presences.subjects_schedules.updated_at;
+          delete item.presences.subjects_schedules.subjects.created_at;
+          delete item.presences.subjects_schedules.subjects.updated_at;
+          delete item.presences.subjects_schedules.study_groups.created_at;
+          delete item.presences.subjects_schedules.study_groups.updated_at;
+          delete item.presences.subjects_schedules.subject_id;
+          delete item.presences.subjects_schedules.user_id;
+          delete item.presences.subjects_schedules.study_group_id;
+          delete item.presences.subjects_schedules.room_id;
+          delete item.presences.subjects_schedules.day_id;
+        });
+      } else {
+        response = await prisma.presences.findMany({
+          orderBy: {
+            created_at: "desc",
+          },
+          where: { user_id },
+          include: {
+            rooms: {
+              select: {
+                name: true,
+                room_code: true,
+                location: true,
+              },
+            },
+            subjects_schedules: {
+              include: {
+                subjects: {},
+                study_groups: {},
+              },
+            },
+          },
+        });
+
+        response.forEach((item) => {
+          item.open_time = new moment(item.open_time).format("HH:mm");
+          if (item.close_time !== null)
+            item.close_time = new moment(item.close_time).format("HH:mm");
+          item.subjects_schedules.start_time = new moment(
+            item.subjects_schedules.start_time
+          ).format("HH:mm");
+          item.subjects_schedules.finish_time = new moment(
+            item.subjects_schedules.finish_time
+          ).format("HH:mm");
+          item.presence_date = new moment(item.presence_date).format(
+            "dddd, D MMMM yyy HH:mm"
+          );
+
+          delete item.created_at;
+          delete item.updated_at;
+          delete item.subjects_schedules.created_at;
+          delete item.subjects_schedules.updated_at;
+          delete item.subjects_schedules.subjects.created_at;
+          delete item.subjects_schedules.subjects.updated_at;
+          delete item.subjects_schedules.study_groups.created_at;
+          delete item.subjects_schedules.study_groups.updated_at;
+        });
+      }
+      if (!response)
+        return res
+          .status(200)
+          .json({ message: "Tidak ada riwayat presensi", data: [] });
+
+      res.status(200).json({ message: "Data Retrieved!", data: response });
     } catch (error) {
       res.status(500).send(error.message);
     }

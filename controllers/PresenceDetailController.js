@@ -161,29 +161,108 @@ module.exports = {
         return res.status(404).json({ message: "Presence Not Found!" });
       }
 
-      if (presence_data.waiting_room === true) {
-        response = await prisma.presences_details.create({
-          data: {
-            presence_id: Number(presence_data.presence_id),
+      const is_exist = await prisma.presences_details.findFirst({
+        where: {
+          AND: {
             user_id: user_id,
-            is_inclass: true,
-            presence_date: now,
-            presence_time: now,
-            created_at: now,
-          },
-        });
-      } else {
-        response = await prisma.presences_details.create({
-          data: {
             presence_id: Number(presence_data.presence_id),
-            user_id: user_id,
-            is_admited: true,
-            is_inclass: true,
-            presence_date: now,
-            presence_time: now,
-            created_at: now,
           },
-        });
+        },
+      });
+      if (is_exist)
+        return res.status(200).json({ message: "Already Presence!" });
+
+      if (!is_exist) {
+        if (presence_data.waiting_room === true) {
+          response = await prisma.presences_details.create({
+            data: {
+              presence_id: Number(presence_data.presence_id),
+              user_id: user_id,
+              is_inclass: true,
+              presence_date: now,
+              presence_time: now,
+              created_at: now,
+            },
+            include: {
+              presences: {
+                include: {
+                  rooms: {
+                    select: {
+                      name: true,
+                      room_code: true,
+                      location: true,
+                    },
+                  },
+                  subjects_schedules: {
+                    select: {
+                      start_time: true,
+                      finish_time: true,
+                    },
+                  },
+                  users: {
+                    select: {
+                      fullname: true,
+                      sid_eid: true,
+                      role_id: true,
+                    },
+                  },
+                },
+              },
+            },
+          });
+        } else {
+          response = await prisma.presences_details.create({
+            data: {
+              presence_id: Number(presence_data.presence_id),
+              user_id: user_id,
+              is_admited: true,
+              is_inclass: true,
+              presence_date: now,
+              presence_time: now,
+              created_at: now,
+            },
+            include: {
+              presences: {
+                include: {
+                  rooms: {
+                    select: {
+                      name: true,
+                      room_code: true,
+                      location: true,
+                    },
+                  },
+                  subjects_schedules: {
+                    select: {
+                      start_time: true,
+                      finish_time: true,
+                      subjects: true,
+                    },
+                  },
+                  users: {
+                    select: {
+                      fullname: true,
+                      sid_eid: true,
+                      role_id: true,
+                    },
+                  },
+                },
+              },
+            },
+          });
+        }
+
+        response.presences.open_time = new moment(
+          response.presences.open_time
+        ).format("HH:mm");
+        response.presences.subjects_schedules.start_time = new moment(
+          response.presences.subjects_schedules.start_time
+        ).format("HH:mm");
+        response.presences.subjects_schedules.finish_time = new moment(
+          response.presences.subjects_schedules.finish_time
+        ).format("HH:mm");
+        response.presence_date = new moment(response.presence_date).format(
+          "dddd, D MMMM yyy HH:mm"
+        );
       }
 
       res.status(201).json({ message: "Data Created!", data: response });
@@ -195,27 +274,77 @@ module.exports = {
   getDetailClass: async (req, res) => {
     try {
       const { presence_id } = req.params;
-      let response = null;
+      let data = null;
+      let users = null;
 
       const presence_data = await prisma.presences.findFirst({
         where: {
           presence_id: Number(presence_id),
         },
+        include: {
+          rooms: {
+            select: {
+              name: true,
+              room_code: true,
+              location: true,
+            },
+          },
+          subjects_schedules: {
+            include: {
+              subjects: {
+                select: {
+                  name: true,
+                  acronym: true,
+                },
+              },
+            },
+          },
+        },
       });
       if (!presence_data)
         return res.status(404).json({ message: "Presence Isn't Exist!" });
 
+      presence_data.open_time = new moment(presence_data.open_time).format(
+        "HH:mm"
+      );
+      presence_data.presence_date = new moment(
+        presence_data.presence_date
+      ).format("dddd, D MMMM yyy HH:mm");
+      presence_data.subjects_schedules.start_time = new moment(
+        presence_data.subjects_schedules.start_time
+      ).format("HH:mm");
+      presence_data.subjects_schedules.finish_time = new moment(
+        presence_data.subjects_schedules.finish_time
+      ).format("HH:mm");
+
+      delete presence_data.created_at;
+      delete presence_data.updated_at;
+      delete presence_data.subjects_schedules.created_at;
+      delete presence_data.subjects_schedules.updated_at;
+
+      data = presence_data;
+
       if (presence_data.waiting_room)
-        response = await prisma.presences_details.findMany({
+        users = await prisma.presences_details.findMany({
+          orderBy: {
+            created_at: "desc",
+          },
           where: {
             AND: {
               presence_id: Number(presence_id),
               is_admited: true,
             },
           },
+          include: {
+            presences: {
+              include: {
+                rooms: {},
+              },
+            },
+          },
         });
       else
-        response = await prisma.presences_details.findMany({
+        users = await prisma.presences_details.findMany({
           where: {
             presence_id: Number(presence_id),
           },
@@ -235,7 +364,28 @@ module.exports = {
           },
         });
 
-      res.status(200).json({ message: "Data Retrieved!", data: response });
+      users.forEach((item) => {
+        item.presence_time = new moment(item.presence_time).format("HH:mm");
+        item.presence_date = new moment(item.presence_date).format(
+          "dddd, D MMMM yyy HH:mm"
+        );
+
+        delete item.created_at;
+        delete item.updated_at;
+      });
+
+      delete data.subject_schedule_id;
+      delete data.room_id;
+      delete data.user_id;
+      delete data.subjects_schedules.subject_id;
+      delete data.subjects_schedules.day_id;
+      delete data.subjects_schedules.room_id;
+      delete data.subjects_schedules.user_id;
+      delete data.subjects_schedules.study_group_id;
+
+      data = { ...data, users };
+
+      res.status(200).json({ message: "Data Retrieved!", data });
     } catch (error) {
       res.status(500).send(error.message);
     }

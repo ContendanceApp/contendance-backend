@@ -58,6 +58,42 @@ const subjectScheduleData = [
     start_time: new moment("13:00", "HH:mm").format(),
     finish_time: new moment("16:20", "HH:mm").format(),
   },
+  {
+    subject_id: 4,
+    user_id: 31,
+    study_group_id: 2,
+    room_id: 1,
+    day_id: 3,
+    start_time: new moment("08:00", "HH:mm").format(),
+    finish_time: new moment("11:20", "HH:mm").format(),
+  },
+  {
+    subject_id: 5,
+    user_id: 32,
+    study_group_id: 1,
+    room_id: 1,
+    day_id: 4,
+    start_time: new moment("16:00", "HH:mm").format(),
+    finish_time: new moment("18:40", "HH:mm").format(),
+  },
+  {
+    subject_id: 5,
+    user_id: 32,
+    study_group_id: 2,
+    room_id: 1,
+    day_id: 4,
+    start_time: new moment("16:00", "HH:mm").format(),
+    finish_time: new moment("18:40", "HH:mm").format(),
+  },
+  {
+    subject_id: 6,
+    user_id: 33,
+    study_group_id: 1,
+    room_id: 1,
+    day_id: 5,
+    start_time: new moment("08:00", "HH:mm").format(),
+    finish_time: new moment("11:20", "HH:mm").format(),
+  },
 ];
 
 async function main() {

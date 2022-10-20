@@ -9,6 +9,7 @@ const presenceDetailController = require("../controllers/PresenceDetailControlle
 const rolesController = require("../controllers/RoleController.js");
 const roomsController = require("../controllers/RoomController.js");
 const schedulesController = require("../controllers/ScheduleController.js");
+const subjectsSchedulesController = require("../controllers/SubjectsSchedulesController.js");
 const router = express.Router();
 
 /* GET home page. */
@@ -77,6 +78,16 @@ router.get(
   presenceController.getActivePresence
 );
 router.get(
+  "/presences/history",
+  authMiddleware,
+  presenceController.getPresenceHistory
+);
+router.put(
+  "/presences/waiting-room/enable",
+  authMiddleware,
+  presenceController.toggleWaitingRoom
+);
+router.get(
   "/presences/:id",
   authMiddleware,
   presenceController.getPresenceById
@@ -85,11 +96,6 @@ router.put(
   "/presences/update/:id",
   authMiddleware,
   presenceController.updatePresence
-);
-router.put(
-  "/presences/waiting-room/enable",
-  authMiddleware,
-  presenceController.toggleWaitingRoom
 );
 router.delete(
   "/presences/delete/:id",
@@ -191,6 +197,12 @@ router.get(
   "/schedules/:id",
   authMiddleware,
   schedulesController.getSchedulesById
+);
+
+router.get(
+  "/subject-schedules/study-group",
+  authMiddleware,
+  subjectsSchedulesController.getSubjectsSchedulesByStudyGroup
 );
 
 module.exports = router;
