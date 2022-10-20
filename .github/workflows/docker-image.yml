@@ -49,6 +49,6 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           script: |
             docker rm -f contendance-backend
-            docker image rm -f contendance-backend:latest
+            docker image rm -f ${{ secrets.DH_USERNAME }}/contendance-backend:latest
             docker pull ${{ secrets.DH_USERNAME }}/contendance-backend:latest
             docker run --name contendance-backend -d -p 5000:5000 --restart always ${{ secrets.DH_USERNAME }}/contendance-backend:latest
