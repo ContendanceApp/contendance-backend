@@ -144,17 +144,17 @@ module.exports = {
         },
       });
 
-      const is_legal = await prisma.subjects_schedules.findFirst({
-        where: {
-          AND: {
-            subject_schedule_id: Number(subject_schedule_id),
-            user_id,
-            day_id: day.day_id,
-          },
-        },
-      });
-      if (!is_legal)
-        return res.status(403).json({ message: "Illegal Action!" });
+      // const is_legal = await prisma.subjects_schedules.findFirst({
+      //   where: {
+      //     AND: {
+      //       subject_schedule_id: Number(subject_schedule_id),
+      //       user_id,
+      //       day_id: day.day_id,
+      //     },
+      //   },
+      // });
+      // if (!is_legal)
+      //   return res.status(403).json({ message: "Illegal Action!" });
 
       const is_exist = await prisma.presences.findFirst({
         where: {
