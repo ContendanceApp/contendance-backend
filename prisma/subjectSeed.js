@@ -27,6 +27,10 @@ const subjectData = [
     name: "Workshop Administrasi Basis Data",
     acronym: "WABD",
   },
+  {
+    name: "Sprint Review WPPL",
+    acronym: "SRW",
+  },
 ];
 
 async function main() {
