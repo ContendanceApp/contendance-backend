@@ -106,7 +106,7 @@ module.exports = {
     try {
       const { proximity_uuid } = req.body;
       const { user_id, study_group_id } = req.user;
-      const now = new moment().format();
+      const now = new moment_tz().tz("Asia/Jakarta").format();
       const dayNow = new moment().format("dddd");
       let response = null;
 
@@ -251,27 +251,21 @@ module.exports = {
           });
         }
 
-        response.presence_time = new moment_tz(response.presence_time)
-          .tz("Asia/Jakarta")
-          .format("HH:mm");
-        response.presences.open_time = new moment_tz(
+        response.presence_time = new moment(response.presence_time).format(
+          "HH:mm"
+        );
+        response.presences.open_time = new moment(
           response.presences.open_time
-        )
-          .tz("Asia/Jakarta")
-          .format("HH:mm");
-        response.presences.subjects_schedules.start_time = new moment_tz(
+        ).format("HH:mm");
+        response.presences.subjects_schedules.start_time = new moment(
           response.presences.subjects_schedules.start_time
-        )
-          .tz("Asia/Jakarta")
-          .format("HH:mm");
-        response.presences.subjects_schedules.finish_time = new moment_tz(
+        ).format("HH:mm");
+        response.presences.subjects_schedules.finish_time = new moment(
           response.presences.subjects_schedules.finish_time
-        )
-          .tz("Asia/Jakarta")
-          .format("HH:mm");
-        response.presence_date = new moment_tz(response.presence_date)
-          .tz("Asia/Jakarta")
-          .format("dddd, D MMMM yyy HH:mm");
+        ).format("HH:mm");
+        response.presence_date = new moment(response.presence_date).format(
+          "dddd, D MMMM yyy HH:mm"
+        );
       }
 
       res.status(201).json({ message: "Data Created!", data: response });
