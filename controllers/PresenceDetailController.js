@@ -251,18 +251,27 @@ module.exports = {
           });
         }
 
-        response.presences.open_time = new moment(
+        response.presence_time = new moment_tz(response.presence_time)
+          .tz("Asia/Jakarta")
+          .format("HH:mm");
+        response.presences.open_time = new moment_tz(
           response.presences.open_time
-        ).format("HH:mm");
-        response.presences.subjects_schedules.start_time = new moment(
+        )
+          .tz("Asia/Jakarta")
+          .format("HH:mm");
+        response.presences.subjects_schedules.start_time = new moment_tz(
           response.presences.subjects_schedules.start_time
-        ).format("HH:mm");
-        response.presences.subjects_schedules.finish_time = new moment(
+        )
+          .tz("Asia/Jakarta")
+          .format("HH:mm");
+        response.presences.subjects_schedules.finish_time = new moment_tz(
           response.presences.subjects_schedules.finish_time
-        ).format("HH:mm");
-        response.presence_date = new moment(response.presence_date).format(
-          "dddd, D MMMM yyy HH:mm"
-        );
+        )
+          .tz("Asia/Jakarta")
+          .format("HH:mm");
+        response.presence_date = new moment_tz(response.presence_date)
+          .tz("Asia/Jakarta")
+          .format("dddd, D MMMM yyy HH:mm");
       }
 
       res.status(201).json({ message: "Data Created!", data: response });
