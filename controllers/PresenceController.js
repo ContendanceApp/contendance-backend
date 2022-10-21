@@ -149,6 +149,7 @@ module.exports = {
           AND: {
             subject_schedule_id: Number(subject_schedule_id),
             user_id,
+            day_id: day.day_id,
           },
         },
       });
