@@ -1,6 +1,4 @@
 const { PrismaClient } = require("@prisma/client");
-const moment = require("moment");
-const moment_tz = require("moment-timezone");
 
 const prisma = new PrismaClient();
 
@@ -11,70 +9,63 @@ module.exports = {
       let response = null;
 
       if (role_id == 1) {
-        response = await prisma.subjects_schedules.findMany({
-          where: {
-            study_group_id,
-          },
+        response = await prisma.days.findMany({
           include: {
-            days: {
-              select: {
-                day: true,
+            subjects_schedules: {
+              where: {
+                study_group_id,
               },
-            },
-            rooms: {
-              select: {
-                name: true,
-                room_code: true,
-                location: true,
-              },
-            },
-            subjects: {
-              select: {
-                name: true,
-                acronym: true,
-              },
-            },
-            users: {
-              select: {
-                fullname: true,
-                sid_eid: true,
+              include: {
+                rooms: {
+                  select: {
+                    name: true,
+                    room_code: true,
+                    location: true,
+                  },
+                },
+                subjects: {
+                  select: {
+                    name: true,
+                    acronym: true,
+                  },
+                },
+                users: {
+                  select: {
+                    fullname: true,
+                    sid_eid: true,
+                  },
+                },
               },
             },
           },
         });
       } else {
-        response = await prisma.subjects_schedules.findMany({
-          where: {
-            user_id,
-          },
+        response = await prisma.days.findMany({
           include: {
-            study_groups: {
-              select: {
-                name: true,
+            subjects_schedules: {
+              where: {
+                user_id,
               },
-            },
-            days: {
-              select: {
-                day: true,
-              },
-            },
-            rooms: {
-              select: {
-                name: true,
-                room_code: true,
-                location: true,
-              },
-            },
-            subjects: {
-              select: {
-                name: true,
-                acronym: true,
-              },
-            },
-            users: {
-              select: {
-                fullname: true,
-                sid_eid: true,
+              include: {
+                rooms: {
+                  select: {
+                    name: true,
+                    room_code: true,
+                    location: true,
+                  },
+                },
+                subjects: {
+                  select: {
+                    name: true,
+                    acronym: true,
+                  },
+                },
+                users: {
+                  select: {
+                    fullname: true,
+                    sid_eid: true,
+                  },
+                },
               },
             },
           },
@@ -85,9 +76,6 @@ module.exports = {
       }
 
       response.forEach((item) => {
-        item.start_time = new moment(item.start_time).format("HH:mm");
-        item.finish_time = new moment(item.finish_time).format("HH:mm");
-
         delete item.created_at;
         delete item.updated_at;
         delete item.subject_id;

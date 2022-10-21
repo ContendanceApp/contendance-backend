@@ -462,7 +462,6 @@ module.exports = {
         });
 
         response.forEach((item) => {
-          item.presence_time = new moment(item.presence_time).format("HH:mm");
           item.presences.open_time = new moment(
             item.presences.open_time
           ).format("HH:mm");

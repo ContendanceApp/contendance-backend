@@ -5,11 +5,9 @@
     "version": "3.0.0",
     "description": ""
   },
-  "host": "api.contendance.studio",
+  "host": "localhost:5000",
   "basePath": "/api",
-  "schemes": [
-    "https"
-  ],
+  "schemes": ["http"],
   "paths": {
     "/": {
       "get": {
