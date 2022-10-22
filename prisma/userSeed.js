@@ -247,8 +247,9 @@ const userData = [
     role_id: 1,
     study_group_id: 1,
   },
+  // User ID: 28
   {
-    fullname: "Nailussa`ada",
+    fullname: "Nailussa`ada S.ST., M.Tr.Kom.",
     sid_eid: "199609072020122007",
     email: "nailus@it.lecturer.pens.ac.id",
     gender: "P",
@@ -256,8 +257,9 @@ const userData = [
     role_id: 2,
     study_group_id: null,
   },
+  // User ID: 29
   {
-    fullname: "Desy Intan Permatasari",
+    fullname: "Desy Intan Permatasari S.Kom., M.Kom.",
     sid_eid: "198603232015042004",
     email: "desy@it.lecturer.pens.ac.id",
     gender: "P",
@@ -265,8 +267,9 @@ const userData = [
     role_id: 2,
     study_group_id: null,
   },
+  // User ID: 30
   {
-    fullname: "Umi Sa'adah",
+    fullname: "Umi Sa'adah S.Kom, M.Kom",
     sid_eid: "197404162000032003",
     email: "umi@it.lecturer.pens.ac.id",
     gender: "P",
@@ -274,6 +277,7 @@ const userData = [
     role_id: 2,
     study_group_id: null,
   },
+  // User ID: 31
   {
     fullname: "Hero Yudo Martono ST, MT",
     sid_eid: "197811032005011002",
@@ -283,6 +287,7 @@ const userData = [
     role_id: 2,
     study_group_id: null,
   },
+  // User ID: 32
   {
     fullname: "Fadilah Fahrul Hardiansyah S.ST., M. Kom.",
     sid_eid: "198901292019031013",
@@ -292,6 +297,7 @@ const userData = [
     role_id: 2,
     study_group_id: null,
   },
+  // User ID: 33
   {
     fullname: "Ahmad Syauqi Ahsan S.Kom., M.T.",
     sid_eid: "197505302003121001",
@@ -301,6 +307,57 @@ const userData = [
     role_id: 2,
     study_group_id: null,
   },
+  // User ID: 34
+  {
+    fullname: "Yuliana Setiowati S.Kom, M.Kom",
+    sid_eid: "197807062002122003",
+    email: "yuliana@it.lecturer.pens.ac.id",
+    gender: "P",
+    password: bcrypt.hashSync("password"),
+    role_id: 2,
+    study_group_id: null,
+  },
+  // User ID: 35
+  {
+    fullname: "Irwan Sumarsono SS., M.Pd.",
+    sid_eid: "196912192002121001",
+    email: "irwan@it.lecturer.pens.ac.id",
+    gender: "L",
+    password: bcrypt.hashSync("password"),
+    role_id: 2,
+    study_group_id: null,
+  },
+  // User ID: 36
+  {
+    fullname: "Aliridho Barakbah S.Kom., Ph.D.",
+    sid_eid: "197308162001121001",
+    email: "aliridho@it.lecturer.pens.ac.id",
+    gender: "L",
+    password: bcrypt.hashSync("password"),
+    role_id: 2,
+    study_group_id: null,
+  },
+  // User ID: 37
+  {
+    fullname: "M. Udin Harun Al Rasyid S.Kom, Ph.D",
+    sid_eid: "198108082005011001",
+    email: "udinharun@it.lecturer.pens.ac.id",
+    gender: "L",
+    password: bcrypt.hashSync("password"),
+    role_id: 2,
+    study_group_id: null,
+  },
+  // User ID: 38
+  {
+    fullname: "Nur Rosyid Mubtadai S.Kom., M.T.",
+    sid_eid: "197403182001121005",
+    email: "nurrosyid@it.lecturer.pens.ac.id",
+    gender: "L",
+    password: bcrypt.hashSync("password"),
+    role_id: 2,
+    study_group_id: null,
+  },
+  //
   {
     fullname: "Santi",
     sid_eid: "3120600031",
