@@ -35,6 +35,12 @@ module.exports = {
                     sid_eid: true,
                   },
                 },
+                study_groups: {
+                  select: {
+                    name: true,
+                    year: true,
+                  },
+                },
               },
             },
           },
@@ -64,6 +70,12 @@ module.exports = {
                   select: {
                     fullname: true,
                     sid_eid: true,
+                  },
+                },
+                study_groups: {
+                  select: {
+                    name: true,
+                    year: true,
                   },
                 },
               },
