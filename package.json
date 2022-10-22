@@ -6,7 +6,7 @@
   },
   "private": true,
   "scripts": {
-    "start": "dotenv -e .env.production node ./bin/www",
+    "start": "node ./bin/www",
     "dev": "dotenv -e .env.development nodemon ./bin/www",
     "swagger-autogen": "node swagger.js",
     "migrate-dev:dev": "dotenv -e .env.development -- npx prisma migrate dev --name init",
