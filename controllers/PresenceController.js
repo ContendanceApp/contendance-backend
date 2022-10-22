@@ -177,9 +177,9 @@ module.exports = {
           user_id: Number(user_id),
           is_open: true,
           waiting_room: false,
-          open_time: new moment().format(),
+          open_time: moment_tz().tz("Asia/Jakarta").format(),
           close_time: null,
-          presence_date: new moment().format(),
+          presence_date: moment_tz().tz("Asia/Jakarta").format(),
         },
         include: {
           users: {
@@ -206,7 +206,6 @@ module.exports = {
         },
       });
 
-      presence.open_time = new moment(presence.open_time).format("HH:mm");
       presence.subjects_schedules.start_time = new moment(
         presence.subjects_schedules.start_time
       ).format("HH:mm");
@@ -526,7 +525,6 @@ module.exports = {
         });
 
         response.forEach((item) => {
-          item.open_time = new moment(item.open_time).format("HH:mm");
           if (item.close_time !== null)
             item.close_time = new moment(item.close_time).format("HH:mm");
           item.subjects_schedules.start_time = new moment(
