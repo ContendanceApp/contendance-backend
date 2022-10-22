@@ -107,7 +107,9 @@ module.exports = {
       const { proximity_uuid } = req.body;
       const { user_id, study_group_id } = req.user;
       const now = new moment_tz().tz("Asia/Jakarta").format();
-      const dayNow = new moment().format("dddd");
+      const dayNow = new moment_tz().tz("Asia/Jakarta").format("dddd");
+      console.log(now);
+      console.log(dayNow);
       let response = null;
 
       // Get Day Now
