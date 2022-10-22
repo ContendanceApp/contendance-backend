@@ -254,9 +254,6 @@ module.exports = {
         response.presence_time = new moment(response.presence_time).format(
           "HH:mm"
         );
-        response.presences.open_time = new moment(
-          response.presences.open_time
-        ).format("HH:mm");
         response.presences.subjects_schedules.start_time = new moment(
           response.presences.subjects_schedules.start_time
         ).format("HH:mm");
