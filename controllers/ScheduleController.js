@@ -209,7 +209,7 @@ module.exports = {
       });
       res.status(201).json(subjects_schedules);
     } catch (error) {
-      res.status(400).json({ msg: error.message });
+      res.status(500).send(error.message);
     }
   },
 

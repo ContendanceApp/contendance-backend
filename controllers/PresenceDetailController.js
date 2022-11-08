@@ -102,40 +102,32 @@ module.exports = {
     }
   },
 
-  presence: async (req, res) => {
+  findPresences: async (req, res) => {
     try {
       const { proximity_uuid } = req.body;
-      const { user_id, study_group_id } = req.user;
-      const now = new moment_tz().tz("Asia/Jakarta").format();
+      const { study_group_id } = req.user;
       const dayNow = new moment_tz().tz("Asia/Jakarta").format("dddd");
-      let response = null;
 
       // Get Day Now
       const day = await prisma.days.findFirst({
         where: { day: dayNow },
-        select: { day_id: true },
       });
 
-      // Get Beacon by Proximity
       const beacon_data = await prisma.beacons.findFirst({
         where: { proximity_uuid },
       });
-      if (!beacon_data) {
+      if (!beacon_data)
         return res.status(404).json({ message: "Beacon Not Found!" });
-      }
 
-      // Get Room by Beacon ID
       const room_data = await prisma.rooms.findFirst({
         where: {
           beacon_id: beacon_data.beacon_id,
         },
       });
-      if (!beacon_data) {
+      if (!beacon_data)
         return res.status(404).json({ message: "Beacon Not Found!" });
-      }
 
-      // Find Presence by Room ID, Is Open TRUE, Study Group ID from Subject Schedule
-      const subject_schedule_data = await prisma.subjects_schedules.findFirst({
+      const subject_schedule_data = await prisma.subjects_schedules.findMany({
         where: {
           AND: {
             room_id: room_data.room_id,
@@ -144,16 +136,30 @@ module.exports = {
           },
         },
       });
-      if (!subject_schedule_data) {
+      if (!subject_schedule_data)
         return res.status(404).json({ message: "Schedule Not Found!" });
-      }
+
+      return res
+        .status(200)
+        .json({ message: "Schedule Found", data: subject_schedule_data });
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  },
+
+  presence: async (req, res) => {
+    try {
+      const { subject_schedule_id } = req.body;
+      const { user_id, study_group_id } = req.user;
+      const now = new moment_tz().tz("Asia/Jakarta").format();
+      let response = null;
 
       const presence_data = await prisma.presences.findFirst({
         where: {
           AND: {
             is_open: true,
             close_time: null,
-            subject_schedule_id: subject_schedule_data.subject_schedule_id,
+            subject_schedule_id: subject_schedule_id,
           },
         },
       });
