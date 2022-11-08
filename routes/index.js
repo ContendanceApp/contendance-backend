@@ -20,6 +20,11 @@ router.get("/", function (req, res, next) {
 // User
 router.post("/users/login", userController.login);
 router.get("/users/me", authMiddleware, userController.me);
+router.post(
+  "/users/change-password",
+  authMiddleware,
+  userController.changePassword
+);
 
 // Beacon
 router.get("/beacons", authMiddleware, beaconController.getBeacons);
@@ -59,7 +64,11 @@ router.delete(
 // Presence & Presence Detail
 // Presence Controller
 router.get("/presences/", authMiddleware, presenceController.getPresences);
-router.post("/presences/find", authMiddleware, presenceController.findClasses);
+router.post(
+  "/presences/find-classes",
+  authMiddleware,
+  presenceController.findClasses
+);
 router.post(
   "/presences/open",
   authMiddleware,
@@ -109,6 +118,11 @@ router.get(
   authMiddleware,
   roleCheckMiddleware.admin,
   presenceDetailController.getPresenceDetail
+);
+router.post(
+  "/presences/find-presences",
+  authMiddleware,
+  presenceDetailController.findPresences
 );
 router.post(
   "/presences/create",
