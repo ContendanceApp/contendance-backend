@@ -120,11 +120,6 @@ router.get(
   presenceDetailController.getPresenceDetail
 );
 router.post(
-  "/presences/find-presences",
-  authMiddleware,
-  presenceDetailController.findPresences
-);
-router.post(
   "/presences/create",
   authMiddleware,
   presenceDetailController.presence
