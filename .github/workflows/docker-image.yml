@@ -41,12 +41,24 @@ jobs:
           push: true
           tags: ${{ secrets.DH_USERNAME }}/contendance-backend:latest
         
-      - name: SSH Remote Commands
+      - name: SSH Remote Commands (Azure)
         uses: appleboy/ssh-action@v0.1.5
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
+          script: |
+            docker rm -f contendance-backend
+            docker image rm -f ${{ secrets.DH_USERNAME }}/contendance-backend:latest
+            docker pull ${{ secrets.DH_USERNAME }}/contendance-backend:latest
+            docker run --name contendance-backend -d -p 5000:5000 --restart always ${{ secrets.DH_USERNAME }}/contendance-backend:latest
+            
+      - name: SSH Remote Commands (DO)
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.DO_SSH_HOST }}
+          username: ${{ secrets.DO_SSH_USERNAME }}
+          password: ${{ secrets.DO_SSH_PASSWORD }}
           script: |
             docker rm -f contendance-backend
             docker image rm -f ${{ secrets.DH_USERNAME }}/contendance-backend:latest
