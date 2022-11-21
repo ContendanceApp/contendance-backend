@@ -29,11 +29,11 @@ module.exports = {
             data: { user: checkAccount, token: accessToken },
           });
         } else {
-          res.status(404).json({ message: "Email or password is invalid" });
+          res.status(404).json({ message: "Email atau password tidak cocok!" });
           return;
         }
       } else {
-        res.status(404).json({ message: "Email or password is invalid" });
+        res.status(404).json({ message: "Email atau password tidak cocok!" });
         return;
       }
     } catch (error) {
@@ -184,16 +184,18 @@ module.exports = {
             },
           });
           if (!update_password)
-            return res.status(500).json({ message: "Can't update password!" });
+            return res
+              .status(500)
+              .json({ message: "Tidak dapat merubah password! (500)" });
 
-          res.status(200).json({ message: "Password successfully updated!" });
+          res.status(200).json({ message: "Password berhasil diubah!" });
         } else {
           return res
             .status(500)
-            .json({ message: "Password must be at least 8 characters!" });
+            .json({ message: "Password minimal 8 karakter!" });
         }
       } else {
-        res.status(404).json({ message: "Old password doesn't match!" });
+        res.status(404).json({ message: "Password lama tidak cocok!" });
         return;
       }
     } catch (error) {
