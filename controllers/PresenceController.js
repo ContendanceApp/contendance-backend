@@ -106,7 +106,7 @@ module.exports = {
         include: {
           rooms: { select: { name: true, room_code: true, location: true } },
           study_groups: { select: { name: true } },
-          subjects: { select: { name: true } },
+          subjects: { select: { name: true, acronym: true } },
           users: { select: { fullname: true } },
           days: { select: { day_id: true, day: true } },
         },
