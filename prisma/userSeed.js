@@ -78,7 +78,7 @@ const userData = [
   },
   {
     fullname: "Ainul Muhlasin",
-    sid_eid: "31206000011",
+    sid_eid: "3120600011",
     email: "ainul@it.student.pens.ac.id",
     gender: "L",
     password: bcrypt.hashSync("password"),
@@ -87,7 +87,7 @@ const userData = [
   },
   {
     fullname: "Raihan Ahnaf Nafisaputra",
-    sid_eid: "31206000012",
+    sid_eid: "3120600012",
     email: "rehan@it.student.pens.ac.id",
     gender: "L",
     password: bcrypt.hashSync("password"),
@@ -96,7 +96,7 @@ const userData = [
   },
   {
     fullname: "Faisal Amrullah Pratama",
-    sid_eid: "31206000013",
+    sid_eid: "3120600013",
     email: "faisal@it.student.pens.ac.id",
     gender: "L",
     password: bcrypt.hashSync("password"),
@@ -105,7 +105,7 @@ const userData = [
   },
   {
     fullname: "Aqyun Rista Maulidin",
-    sid_eid: "31206000014",
+    sid_eid: "3120600014",
     email: "aqyun@it.student.pens.ac.id",
     gender: "P",
     password: bcrypt.hashSync("password"),
@@ -114,7 +114,7 @@ const userData = [
   },
   {
     fullname: "Hafiyyan Dwika Arya",
-    sid_eid: "31206000015",
+    sid_eid: "3120600015",
     email: "arya@it.student.pens.ac.id",
     gender: "L",
     password: bcrypt.hashSync("password"),
@@ -123,7 +123,7 @@ const userData = [
   },
   {
     fullname: "Febri Permata Emiliana",
-    sid_eid: "31206000016",
+    sid_eid: "3120600016",
     email: "febri@it.student.pens.ac.id",
     gender: "L",
     password: bcrypt.hashSync("password"),
@@ -132,7 +132,7 @@ const userData = [
   },
   {
     fullname: "Ahmed Indarafata Akmal Maulana S.",
-    sid_eid: "31206000017",
+    sid_eid: "3120600017",
     email: "andre@it.student.pens.ac.id",
     gender: "L",
     password: bcrypt.hashSync("password"),
@@ -141,7 +141,7 @@ const userData = [
   },
   {
     fullname: "Putri Ayu Nisa Az-Zahra",
-    sid_eid: "31206000018",
+    sid_eid: "3120600018",
     email: "puay@it.student.pens.ac.id",
     gender: "P",
     password: bcrypt.hashSync("password"),
@@ -150,7 +150,7 @@ const userData = [
   },
   {
     fullname: "Moh. Zakariya Al Ansori",
-    sid_eid: "31206000019",
+    sid_eid: "3120600019",
     email: "alan@it.student.pens.ac.id",
     gender: "L",
     password: bcrypt.hashSync("password"),
@@ -159,7 +159,7 @@ const userData = [
   },
   {
     fullname: "Afnan Amiludin",
-    sid_eid: "31206000020",
+    sid_eid: "3120600020",
     email: "afnan@it.student.pens.ac.id",
     gender: "L",
     password: bcrypt.hashSync("password"),
@@ -168,7 +168,7 @@ const userData = [
   },
   {
     fullname: "Muh. Arga Swara Iskandar",
-    sid_eid: "31206000021",
+    sid_eid: "3120600021",
     email: "arga@it.student.pens.ac.id",
     gender: "L",
     password: bcrypt.hashSync("password"),
@@ -177,7 +177,7 @@ const userData = [
   },
   {
     fullname: "Setyo Aryo Pangestu",
-    sid_eid: "31206000022",
+    sid_eid: "3120600022",
     email: "aryo@it.student.pens.ac.id",
     gender: "L",
     password: bcrypt.hashSync("password"),
@@ -186,7 +186,7 @@ const userData = [
   },
   {
     fullname: "Ade Purnama",
-    sid_eid: "31206000023",
+    sid_eid: "3120600023",
     email: "ade@it.student.pens.ac.id",
     gender: "L",
     password: bcrypt.hashSync("password"),
@@ -195,7 +195,7 @@ const userData = [
   },
   {
     fullname: "Muhammad Yus'ad Al Machmudi",
-    sid_eid: "31206000025",
+    sid_eid: "3120600025",
     email: "yusad@it.student.pens.ac.id",
     gender: "L",
     password: bcrypt.hashSync("password"),
@@ -204,7 +204,7 @@ const userData = [
   },
   {
     fullname: "Devafilla Rizqy Santosa",
-    sid_eid: "31206000026",
+    sid_eid: "3120600026",
     email: "deva@it.student.pens.ac.id",
     gender: "L",
     password: bcrypt.hashSync("password"),
@@ -213,7 +213,7 @@ const userData = [
   },
   {
     fullname: "Ahmad Fasih Nayl Jabaa'Ir",
-    sid_eid: "31206000027",
+    sid_eid: "3120600027",
     email: "affa@it.student.pens.ac.id",
     gender: "L",
     password: bcrypt.hashSync("password"),
@@ -222,7 +222,7 @@ const userData = [
   },
   {
     fullname: "Muhammad Nur Faiz",
-    sid_eid: "31206000028",
+    sid_eid: "3120600028",
     email: "faiz@it.student.pens.ac.id",
     gender: "L",
     password: bcrypt.hashSync("password"),
@@ -231,7 +231,7 @@ const userData = [
   },
   {
     fullname: "Muhammad Ghifari Ramadhan",
-    sid_eid: "31206000029",
+    sid_eid: "3120600029",
     email: "ghifari@it.student.pens.ac.id",
     gender: "L",
     password: bcrypt.hashSync("password"),
@@ -240,7 +240,7 @@ const userData = [
   },
   {
     fullname: "Adek Wisnu Winata",
-    sid_eid: "31206000030",
+    sid_eid: "3120600030",
     email: "wisnu@it.student.pens.ac.id",
     gender: "L",
     password: bcrypt.hashSync("password"),
