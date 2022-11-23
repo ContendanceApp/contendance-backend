@@ -12,6 +12,9 @@ const roleData = [
   {
     role: "Admin",
   },
+  {
+    role: "Tester",
+  },
 ];
 
 async function main() {

@@ -63,6 +63,11 @@ const subjectData = [
     name: "Bahasa Indonesia",
     acronym: "BI",
   },
+  // Subject ID: 13
+  {
+    name: "PENSASI",
+    acronym: "PSI",
+  },
 ];
 
 async function main() {

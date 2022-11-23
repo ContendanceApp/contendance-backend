@@ -11,6 +11,10 @@ const studyGroupData = [
     name: "3 D4 IT B",
     year: 2020,
   },
+  {
+    name: "Tester",
+    year: 2022,
+  },
 ];
 
 async function main() {
