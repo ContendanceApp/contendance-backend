@@ -99,6 +99,15 @@ const subjectScheduleData = [
     start_time: new moment("09:40", "HH:mm").format(),
     finish_time: new moment("11:20", "HH:mm").format(),
   },
+  {
+    subject_id: 14,
+    user_id: 63,
+    study_group_id: 1,
+    room_id: 1,
+    day_id: 3,
+    start_time: new moment("01:00", "HH:mm").format(),
+    finish_time: new moment("23:59", "HH:mm").format(),
+  },
   // Kamis
   {
     subject_id: 11,
