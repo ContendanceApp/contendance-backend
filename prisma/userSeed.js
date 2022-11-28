@@ -580,7 +580,7 @@ const userData = [
     email: "admin@contendance.studio",
     gender: "L",
     password: bcrypt.hashSync("password"),
-    role_id: 3,
+    role_id: 2,
     study_group_id: 3,
   },
   {
