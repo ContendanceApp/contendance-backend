@@ -5,10 +5,10 @@ const prisma = new PrismaClient();
 const roomData = [
   {
     beacon_id: 1,
-    name: "Lab. Sistem Informasi",
-    room_code: "C-102",
-    location: "Lantai 1 - Gedung D4",
-    description: "Digunakan untuk praktikum mata kuliah sistem informasi",
+    name: "Gedung PASCA PENS",
+    room_code: "PASCAPENS",
+    location: "Lantai 1 - Gedung PASCA PENS",
+    description: "Digunakan untuk kegiatan PASCA",
   },
   {
     beacon_id: 1,
