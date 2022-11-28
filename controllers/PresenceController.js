@@ -8,7 +8,45 @@ const prisma = new PrismaClient();
 module.exports = {
   getPresences: async (req, res) => {
     try {
-      const response = await prisma.presences.findMany();
+      const response = await prisma.presences.findMany({
+        include: {
+          rooms: {
+            select: {
+              name: true,
+              room_code: true,
+              location: true,
+            },
+          },
+          users: {
+            select: {
+              fullname: true,
+              email: true,
+              sid_eid: true,
+              roles: {
+                select: {
+                  role: true,
+                },
+              },
+            },
+          },
+          subjects_schedules: {
+            include: {
+              subjects: {
+                select: {
+                  acronym: true,
+                  name: true,
+                },
+              },
+              study_groups: {
+                select: {
+                  name: true,
+                  year: true,
+                },
+              },
+            },
+          },
+        },
+      });
       res.status(200).json({ message: "Data Retrieved!", data: response });
     } catch (error) {
       res.status(500).send(error.message);

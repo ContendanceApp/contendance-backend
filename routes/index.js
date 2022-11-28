@@ -63,7 +63,12 @@ router.delete(
 
 // Presence & Presence Detail
 // Presence Controller
-router.get("/presences/", authMiddleware, presenceController.getPresences);
+router.get(
+  "/presences/",
+  authMiddleware,
+  roleCheckMiddleware.admin,
+  presenceController.getPresences
+);
 router.post(
   "/presences/find-classes",
   authMiddleware,
