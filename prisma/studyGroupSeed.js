@@ -12,7 +12,7 @@ const studyGroupData = [
     year: 2020,
   },
   {
-    name: "Tester",
+    name: "PENSASI",
     year: 2022,
   },
 ];

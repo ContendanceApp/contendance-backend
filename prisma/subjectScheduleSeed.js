@@ -80,34 +80,6 @@ const subjectScheduleData = [
     start_time: new moment("13:00", "HH:mm").format(),
     finish_time: new moment("16:20", "HH:mm").format(),
   },
-  // Add on Rabu
-  {
-    subject_id: 11,
-    user_id: 35,
-    study_group_id: 1,
-    room_id: 1,
-    day_id: 3,
-    start_time: new moment("08:00", "HH:mm").format(),
-    finish_time: new moment("09:40", "HH:mm").format(),
-  },
-  {
-    subject_id: 12,
-    user_id: 37,
-    study_group_id: 1,
-    room_id: 1,
-    day_id: 3,
-    start_time: new moment("09:40", "HH:mm").format(),
-    finish_time: new moment("11:20", "HH:mm").format(),
-  },
-  {
-    subject_id: 14,
-    user_id: 63,
-    study_group_id: 1,
-    room_id: 1,
-    day_id: 3,
-    start_time: new moment("01:00", "HH:mm").format(),
-    finish_time: new moment("23:59", "HH:mm").format(),
-  },
   // Kamis
   {
     subject_id: 11,
@@ -261,6 +233,16 @@ const subjectScheduleData = [
     finish_time: new moment("20:00", "HH:mm").format(),
   },
 
+  // PENSASI - Senin
+  {
+    subject_id: 13,
+    user_id: 63,
+    study_group_id: 3,
+    room_id: 1,
+    day_id: 1,
+    start_time: new moment("08:00", "HH:mm").format(),
+    finish_time: new moment("20:00", "HH:mm").format(),
+  },
   // PENSASI - Selasa
   {
     subject_id: 13,
