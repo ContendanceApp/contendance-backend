@@ -24,6 +24,13 @@ const roomData = [
     location: "Lantai 3 - Gedung D4",
     description: "Digunakan untuk kegiatan belajar mengajar",
   },
+  {
+    beacon_id: 1,
+    name: "Gedung PASCA PENS",
+    room_code: "PASCAPENS",
+    location: "Lantai 1 - Gedung PASCA PENS",
+    description: "Digunakan untuk kegiatan PASCA",
+  },
 ];
 
 async function main() {
