@@ -62,8 +62,8 @@ model presences_details {
   is_admited         Boolean   @default(false)
   created_at         DateTime  @default(now())
   updated_at         DateTime  @updatedAt
-  presences          presences @relation(fields: [presence_id], references: [presence_id], onDelete: NoAction, onUpdate: NoAction, map: "presences_details_presence_id_foreign")
-  users              users     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "presences_details_user_id_foreign")
+  presences          presences @relation(fields: [presence_id], references: [presence_id], onDelete: Cascade, onUpdate: NoAction, map: "presences_details_presence_id_foreign")
+  users              users     @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: NoAction, map: "presences_details_user_id_foreign")
 }
 
 model presences_statuses {
