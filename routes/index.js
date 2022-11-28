@@ -67,6 +67,7 @@ router.get(
   "/presences/",
   authMiddleware,
   roleCheckMiddleware.admin,
+  roleCheckMiddleware.dosen,
   presenceController.getPresences
 );
 router.post(
