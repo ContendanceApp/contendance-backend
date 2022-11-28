@@ -73,12 +73,14 @@ router.post(
   "/presences/open",
   authMiddleware,
   roleCheckMiddleware.dosen,
+  roleCheckMiddleware.admin,
   presenceController.openPresence
 );
 router.put(
   "/presences/close",
   authMiddleware,
   roleCheckMiddleware.dosen,
+  roleCheckMiddleware.admin,
   presenceController.closePresence
 );
 router.get(
