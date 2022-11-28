@@ -236,7 +236,7 @@ const subjectScheduleData = [
   // PENSASI - Senin
   {
     subject_id: 13,
-    user_id: 63,
+    user_id: 28,
     study_group_id: 3,
     room_id: 4,
     day_id: 1,
