@@ -581,7 +581,7 @@ const userData = [
     gender: "L",
     password: bcrypt.hashSync("password"),
     role_id: 3,
-    study_group_id: null,
+    study_group_id: 3,
   },
   {
     fullname: "Tester PENSASI 1",
