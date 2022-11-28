@@ -589,7 +589,7 @@ const userData = [
     email: "pensasi1@contendance.studio",
     gender: "L",
     password: bcrypt.hashSync("password"),
-    role_id: 4,
+    role_id: 1,
     study_group_id: 3,
   },
   {
@@ -598,7 +598,7 @@ const userData = [
     email: "pensasi2@contendance.studio",
     gender: "L",
     password: bcrypt.hashSync("password"),
-    role_id: 4,
+    role_id: 1,
     study_group_id: 3,
   },
   {
@@ -607,7 +607,7 @@ const userData = [
     email: "pensasi3@contendance.studio",
     gender: "L",
     password: bcrypt.hashSync("password"),
-    role_id: 4,
+    role_id: 1,
     study_group_id: 3,
   },
   {
@@ -616,7 +616,7 @@ const userData = [
     email: "pensasi4@contendance.studio",
     gender: "L",
     password: bcrypt.hashSync("password"),
-    role_id: 4,
+    role_id: 1,
     study_group_id: 3,
   },
   {
@@ -625,7 +625,7 @@ const userData = [
     email: "pensasi5@contendance.studio",
     gender: "L",
     password: bcrypt.hashSync("password"),
-    role_id: 4,
+    role_id: 1,
     study_group_id: 3,
   },
   {
@@ -634,7 +634,7 @@ const userData = [
     email: "pensasi6@contendance.studio",
     gender: "L",
     password: bcrypt.hashSync("password"),
-    role_id: 4,
+    role_id: 1,
     study_group_id: 3,
   },
   {
@@ -643,7 +643,7 @@ const userData = [
     email: "pensasi7@contendance.studio",
     gender: "L",
     password: bcrypt.hashSync("password"),
-    role_id: 4,
+    role_id: 1,
     study_group_id: 3,
   },
   {
@@ -652,7 +652,7 @@ const userData = [
     email: "pensasi8@contendance.studio",
     gender: "L",
     password: bcrypt.hashSync("password"),
-    role_id: 4,
+    role_id: 1,
     study_group_id: 3,
   },
   {
@@ -661,7 +661,7 @@ const userData = [
     email: "pensasi9@contendance.studio",
     gender: "L",
     password: bcrypt.hashSync("password"),
-    role_id: 4,
+    role_id: 1,
     study_group_id: 3,
   },
   {
@@ -670,7 +670,7 @@ const userData = [
     email: "pensasi10@contendance.studio",
     gender: "L",
     password: bcrypt.hashSync("password"),
-    role_id: 4,
+    role_id: 1,
     study_group_id: 3,
   },
 ];
