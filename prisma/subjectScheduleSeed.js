@@ -253,6 +253,16 @@ const subjectScheduleData = [
     start_time: new moment("08:00", "HH:mm").format(),
     finish_time: new moment("20:00", "HH:mm").format(),
   },
+  // PENSASI - Rabu
+  {
+    subject_id: 13,
+    user_id: 63,
+    study_group_id: 3,
+    room_id: 1,
+    day_id: 3,
+    start_time: new moment("08:00", "HH:mm").format(),
+    finish_time: new moment("15:00", "HH:mm").format(),
+  },
 ];
 
 async function main() {
