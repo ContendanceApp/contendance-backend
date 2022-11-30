@@ -25,15 +25,6 @@ const subjectScheduleData = [
     finish_time: new moment("12:00", "HH:mm").format(),
   },
   {
-    subject_id: 7,
-    user_id: 28,
-    study_group_id: 1,
-    room_id: 1,
-    day_id: 1,
-    start_time: new moment("13:00", "HH:mm").format(),
-    finish_time: new moment("17:00", "HH:mm").format(),
-  },
-  {
     subject_id: 1,
     user_id: 28,
     study_group_id: 1,
@@ -262,6 +253,25 @@ const subjectScheduleData = [
     day_id: 3,
     start_time: new moment("08:00", "HH:mm").format(),
     finish_time: new moment("15:00", "HH:mm").format(),
+  },
+  // Sprint Review Kamis
+  {
+    subject_id: 7,
+    user_id: 28,
+    study_group_id: 1,
+    room_id: 1,
+    day_id: 4,
+    start_time: new moment("08:00", "HH:mm").format(),
+    finish_time: new moment("17:00", "HH:mm").format(),
+  },
+  {
+    subject_id: 7,
+    user_id: 29,
+    study_group_id: 1,
+    room_id: 1,
+    day_id: 4,
+    start_time: new moment("08:00", "HH:mm").format(),
+    finish_time: new moment("17:00", "HH:mm").format(),
   },
 ];
 
