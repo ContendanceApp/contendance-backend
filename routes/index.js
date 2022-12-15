@@ -27,7 +27,12 @@ router.post(
 );
 
 // Beacon
-router.get("/beacons", authMiddleware, beaconController.getBeacons);
+router.get(
+  "/beacons",
+  authMiddleware,
+  roleCheckMiddleware.admin,
+  beaconController.getBeacons
+);
 router.post(
   "/beacons/find/proximity",
   authMiddleware,
