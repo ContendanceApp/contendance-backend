@@ -122,8 +122,14 @@ module.exports = {
           presence_detail_id: Number(presence_detail_id),
         },
       });
+      if (!response)
+        return res
+          .status(404)
+          .json({ message: "Data Not Found!", data: response });
 
-      res.status(200).json({ message: "Data Deleted!", data: response });
+      res
+        .status(200)
+        .json({ message: "Partisipan Berhasil Dihapus!", data: response });
     } catch (error) {
       res.status(500).send(error.message);
     }
@@ -372,6 +378,9 @@ module.exports = {
         users = await prisma.presences_details.findMany({
           where: {
             presence_id: Number(presence_id),
+          },
+          orderBy: {
+            created_at: "desc",
           },
           include: {
             users: {

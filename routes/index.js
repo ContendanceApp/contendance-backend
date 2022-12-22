@@ -112,7 +112,7 @@ router.put(
   presenceController.updatePresence
 );
 router.delete(
-  "/presences/delete/:id",
+  "/presences/cancel/:id",
   authMiddleware,
   presenceController.deletePresence
 );
@@ -135,10 +135,11 @@ router.post(
   roleCheckMiddleware.admin,
   presenceDetailController.createPresenceDetail
 );
-router.post(
-  "/presences-detail/delete/:id",
+router.delete(
+  "/presences-detail/delete/:presence_detail_id",
   authMiddleware,
-  roleCheckMiddleware.admin,
+  // roleCheckMiddleware.dosen,
+  // roleCheckMiddleware.admin,
   presenceDetailController.deletePresenceDetail
 );
 router.get(

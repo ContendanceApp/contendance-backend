@@ -99,12 +99,46 @@ module.exports = {
 
   deletePresence: async (req, res) => {
     try {
-      await prisma.presences.delete({
+      const { user_id } = req.user;
+
+      let result = await prisma.presences.findFirst({
+        where: {
+          AND: {
+            user_id: Number(user_id),
+            presence_id: Number(req.params.id),
+          },
+        },
+      });
+      if (!result) {
+        return res.status(404).json({ message: "Data Not Found!" });
+      }
+
+      const is_exist = await prisma.presences_details.count({
         where: {
           presence_id: Number(req.params.id),
         },
       });
-      res.status(200).json({ message: "Data Deleted!" });
+      if (is_exist > 0) {
+        result = await prisma.presences_details.deleteMany({
+          where: {
+            presence_id: Number(req.params.id),
+          },
+        });
+        if (!result) {
+          return res.status(500).json({ message: "Kesalahan Pada Server!" });
+        }
+      }
+
+      result = await prisma.presences.delete({
+        where: {
+          presence_id: Number(req.params.id),
+        },
+      });
+      if (!result) {
+        return res.status(500).json({ message: "Kesalahan Pada Server!" });
+      }
+
+      res.status(200).json({ message: "Presensi Berhasil Dibatalkan!" });
     } catch (error) {
       res.status(500).send(error.message);
     }
