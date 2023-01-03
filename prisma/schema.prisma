@@ -57,7 +57,7 @@ model presences_details {
   presence_id        Int
   user_id            Int
   presence_time      DateTime  @db.Time(0)
-  presence_date      DateTime  @db.Date
+  presence_date      DateTime  @default(now())
   is_inclass         Boolean   @default(false)
   is_admited         Boolean   @default(false)
   created_at         DateTime  @default(now())
