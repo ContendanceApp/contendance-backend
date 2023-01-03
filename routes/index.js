@@ -138,8 +138,7 @@ router.post(
 router.delete(
   "/presences-detail/delete/:presence_detail_id",
   authMiddleware,
-  // roleCheckMiddleware.dosen,
-  // roleCheckMiddleware.admin,
+  roleCheckMiddleware.adminOrDosen,
   presenceDetailController.deletePresenceDetail
 );
 router.get(
