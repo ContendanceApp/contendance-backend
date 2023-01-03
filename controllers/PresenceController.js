@@ -547,13 +547,12 @@ module.exports = {
           item.presences.subjects_schedules.finish_time = new moment(
             item.presences.subjects_schedules.finish_time
           ).format("HH:mm");
-          item.presence_date = new moment(item.presence_date).format(
-            "dddd, D MMMM yyy HH:mm"
-          );
-          item.presences.presence_date = new moment(item.presence_date).format(
-            "dddd, D MMMM yyy HH:mm"
-          );
+          item.presence_date = new moment(item.presence_date)
+            .startOf("date")
+            .format("yyyy-MM-DD");
+          item.presences.presence_date = new moment(item.presence_date);
 
+          // Remove Unused Data
           delete item.created_at;
           delete item.updated_at;
           delete item.presences.created_at;
@@ -572,6 +571,7 @@ module.exports = {
           delete item.presences.subjects_schedules.study_group_id;
           delete item.presences.subjects_schedules.room_id;
           delete item.presences.subjects_schedules.day_id;
+          delete item.presences.presence_date;
         });
       } else {
         response = await prisma.presences.findMany({
@@ -605,10 +605,11 @@ module.exports = {
           item.subjects_schedules.finish_time = new moment(
             item.subjects_schedules.finish_time
           ).format("HH:mm");
-          item.presence_date = new moment(item.presence_date).format(
-            "dddd, D MMMM yyy HH:mm"
-          );
+          item.presence_date = new moment(item.presence_date)
+            .startOf("date")
+            .format("yyyy-MM-DD");
 
+          // Remove Unused Data
           delete item.created_at;
           delete item.updated_at;
           delete item.subjects_schedules.created_at;
@@ -624,7 +625,17 @@ module.exports = {
           .status(200)
           .json({ message: "Tidak ada riwayat presensi", data: [] });
 
-      res.status(200).json({ message: "Data Retrieved!", data: response });
+      // Groupping Data by Date
+      const grouppedPresence = response.reduce((prev, current) => {
+        (prev[current.presence_date] = prev[current.presence_date] || []).push(
+          current
+        );
+        return prev;
+      }, {});
+
+      res
+        .status(200)
+        .json({ message: "Data Retrieved!", data: grouppedPresence });
     } catch (error) {
       res.status(500).send(error.message);
     }
