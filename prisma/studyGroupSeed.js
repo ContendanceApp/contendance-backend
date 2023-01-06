@@ -12,8 +12,8 @@ const studyGroupData = [
     year: 2020,
   },
   {
-    name: "PENSASI",
-    year: 2022,
+    name: "PENS FEST 2023",
+    year: 2023,
   },
 ];
 

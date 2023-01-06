@@ -65,8 +65,8 @@ const subjectData = [
   },
   // Subject ID: 13
   {
-    name: "PENSASI",
-    acronym: "PSI",
+    name: "PENS FEST 2023",
+    acronym: "PF23",
   },
 ];
 

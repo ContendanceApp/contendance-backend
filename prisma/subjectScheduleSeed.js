@@ -224,35 +224,15 @@ const subjectScheduleData = [
     finish_time: new moment("20:00", "HH:mm").format(),
   },
 
-  // PENSASI - Senin
+  // PENS FEST 2023 - Sabtu
   {
     subject_id: 13,
     user_id: 63,
     study_group_id: 3,
-    room_id: 1,
-    day_id: 1,
-    start_time: new moment("08:00", "HH:mm").format(),
-    finish_time: new moment("20:00", "HH:mm").format(),
-  },
-  // PENSASI - Selasa
-  {
-    subject_id: 13,
-    user_id: 63,
-    study_group_id: 3,
-    room_id: 1,
-    day_id: 2,
-    start_time: new moment("08:00", "HH:mm").format(),
-    finish_time: new moment("20:00", "HH:mm").format(),
-  },
-  // PENSASI - Rabu
-  {
-    subject_id: 13,
-    user_id: 63,
-    study_group_id: 3,
-    room_id: 1,
-    day_id: 3,
-    start_time: new moment("08:00", "HH:mm").format(),
-    finish_time: new moment("15:00", "HH:mm").format(),
+    room_id: 4,
+    day_id: 6,
+    start_time: new moment("08:30", "HH:mm").format(),
+    finish_time: new moment("16:00", "HH:mm").format(),
   },
   // Sprint Review Kamis
   {

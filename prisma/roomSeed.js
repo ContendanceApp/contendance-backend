@@ -29,7 +29,7 @@ const roomData = [
     name: "Gedung PASCA PENS",
     room_code: "PASCAPENS",
     location: "Lantai 1 - Gedung PASCA PENS",
-    description: "Digunakan untuk kegiatan PASCA",
+    description: "Digunakan untuk banyak kegiatan kampus",
   },
 ];
 
