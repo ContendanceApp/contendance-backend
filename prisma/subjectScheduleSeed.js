@@ -229,7 +229,7 @@ const subjectScheduleData = [
     subject_id: 13,
     user_id: 63,
     study_group_id: 3,
-    room_id: 4,
+    room_id: 1,
     day_id: 6,
     start_time: new moment("08:30", "HH:mm").format(),
     finish_time: new moment("16:00", "HH:mm").format(),
